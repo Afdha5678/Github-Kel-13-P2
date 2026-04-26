@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Obat {
+  id                 String   @id @default(uuid())
+  nama               String
+  hargaJual          Int
+  tanggalKedaluwarsa DateTime
+  stok               Stok?    // Relasi One-to-One ke Stok
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model Stok {
+  id        String   @id @default(uuid())
+  jumlah    Int      @default(0)
+  obatId    String   @unique
+  obat      Obat     @relation(fields: [obatId], references: [id])
+  updatedAt DateTime @updatedAt
+}
