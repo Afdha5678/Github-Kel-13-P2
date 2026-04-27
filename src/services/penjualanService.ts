@@ -1,0 +1,77 @@
+import { prisma } from '@/lib/prisma';
+
+export const createPenjualanService = async (data: any) => {
+    // Gunakan Prisma Transaction karena kita melakukan insert transaksi, insert detail, dan memotong stok
+    return await prisma.$transaction(async (tx) => {
+        // 1. Validasi stok cukup untuk setiap item (agregasi dari semua stok)
+        for (const item of data.details) {
+            const stoks = await tx.stok.findMany({
+                where: {
+                    obatId: item.obatId,
+                    jumlah: { gt: 0 }
+                },
+                orderBy: { tanggalKedaluwarsa: 'asc' } // FIFO: ambil yang paling cepat kedaluwarsa
+            });
+
+            const totalStokTersedia = stoks.reduce((sum, b) => sum + b.jumlah, 0);
+            if (totalStokTersedia < item.quantity) {
+                const obat = await tx.obat.findUnique({ where: { id: item.obatId } });
+                throw new Error(`Stok barang tidak mencukupi untuk Obat: ${obat?.nama || item.obatId}. Tersedia: ${totalStokTersedia}, Diminta: ${item.quantity}`);
+            }
+
+            // Simpan stoks untuk digunakan di langkah 3
+            item.availableStoks = stoks;
+        }
+
+        // 2. Buat Transaksi Penjualan
+        const penjualan = await tx.transaksiPenjualan.create({
+            data: {
+                total: data.total,
+                details: {
+                    create: data.details.map((d: any) => ({
+                        quantity: d.quantity,
+                        harga: d.harga,
+                        obatId: d.obatId
+                    }))
+                }
+            },
+            include: { details: true }
+        });
+
+        // 3. Kurangi stok menggunakan logika FIFO dan catat pergerakan stok
+        for (const item of data.details) {
+            let sisaUntukDikurangi = item.quantity;
+
+            for (const stok of item.availableStoks) {
+                if (sisaUntukDikurangi <= 0) break;
+
+                const qtyDariStokIni = Math.min(sisaUntukDikurangi, stok.jumlah);
+                sisaUntukDikurangi -= qtyDariStokIni;
+
+                // Update stok
+                await tx.stok.update({
+                    where: { id: stok.id },
+                    data: { jumlah: { decrement: qtyDariStokIni } }
+                });
+
+                // Catat pergerakan stok
+                await tx.stockMovement.create({
+                    data: {
+                        type: 'OUT',
+                        quantity: qtyDariStokIni,
+                        stokId: stok.id
+                    }
+                });
+            }
+        }
+
+        return penjualan;
+    });
+};
+
+export const getAllPenjualanService = async () => {
+    return await prisma.transaksiPenjualan.findMany({
+        include: { details: true },
+        orderBy: { createdAt: 'desc' }
+    });
+};

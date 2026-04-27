@@ -1,26 +1,131 @@
+// prisma/schema.prisma
+
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client"
+    output   = "../generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+}
+
+model User {
+    id        String   @id @default(uuid())
+    nama      String
+    email     String   @unique
+    password  String // Akan di-hash di Service Layer (menggunakan bcrypt)
+    role      Role     @default(PEGAWAI)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Obat {
-  id                 String   @id @default(uuid())
-  nama               String
-  hargaJual          Int
-  tanggalKedaluwarsa DateTime
-  stok               Stok?    // Relasi One-to-One ke Stok
-  createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt
+    id                 String   @id @default(uuid())
+    nama               String
+    hargaJual          Int
+
+    // Relasi One-to-Many: 1 Obat memiliki banyak Stok
+    stok               Stok[]
+    detailPenjualan    DetailPenjualan[]
+    detailPembelian    DetailPembelian[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Stok {
-  id        String   @id @default(uuid())
-  jumlah    Int      @default(0)
-  obatId    String   @unique
-  obat      Obat     @relation(fields: [obatId], references: [id])
-  updatedAt DateTime @updatedAt
+    id                 String   @id @default(uuid())
+    jumlah             Int      @default(0)
+    tanggalKedaluwarsa DateTime
+
+    // Foreign Key ke tabel Obat
+    obatId             String
+    obat               Obat     @relation(fields: [obatId], references: [id], onDelete: Cascade)
+
+    stockMovements     StockMovement[]
+
+    createdAt          DateTime @default(now())
+    updatedAt          DateTime @updatedAt
+}
+
+model StockMovement {
+    id        String       @id @default(uuid())
+    type      MovementType
+    quantity  Int
+    createdAt DateTime     @default(now())
+
+    stokId    String
+    stok      Stok         @relation(fields: [stokId], references: [id], onDelete: Cascade)
+}
+
+enum MovementType {
+    IN
+    OUT
+    ADJUSTMENT
+}
+
+model TransaksiPenjualan {
+    id      String   @id @default(uuid())
+    tanggal DateTime @default(now())
+    total   Int      // Diagram says Decimal, but we use Int to be consistent with hargaJual
+
+    details DetailPenjualan[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model DetailPenjualan {
+    id       String @id @default(uuid())
+    quantity Int
+    harga    Int
+
+    transaksiId String
+    transaksi   TransaksiPenjualan @relation(fields: [transaksiId], references: [id], onDelete: Cascade)
+
+    obatId String
+    obat   Obat   @relation(fields: [obatId], references: [id])
+}
+
+model Supplier {
+    id      String @id @default(uuid())
+    nama    String
+    alamat  String
+    telepon String
+
+    transaksiPembelian TransaksiPembelian[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model TransaksiPembelian {
+    id      String   @id @default(uuid())
+    tanggal DateTime @default(now())
+    status  String   // e.g., PENDING, COMPLETED
+
+    supplierId String
+    supplier   Supplier @relation(fields: [supplierId], references: [id])
+
+    details DetailPembelian[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model DetailPembelian {
+    id               String @id @default(uuid())
+    quantityOrdered  Int
+    quantityReceived Int
+
+    transaksiId String
+    transaksi   TransaksiPembelian @relation(fields: [transaksiId], references: [id], onDelete: Cascade)
+
+    obatId String
+    obat   Obat   @relation(fields: [obatId], references: [id])
+}
+
+enum Role {
+    OWNER
+    PEGAWAI
 }

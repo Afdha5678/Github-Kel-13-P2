@@ -1,0 +1,392 @@
+{
+	"info": {
+		"_postman_id": "f5f0b4d0-40e1-4560-bf86-53896dfa2862",
+		"name": "Apotek Eka Farma API",
+		"description": "Koleksi API lengkap untuk aplikasi backend Apotek Eka Farma.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000/api",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"item": [
+		{
+			"name": "1. Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nama\": \"Pegawai Baru\",\n    \"email\": \"pegawai@apotek.com\",\n    \"password\": \"pegawai123\",\n    \"role\": \"PEGAWAI\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					}
+				},
+				{
+					"name": "Login (Auto-Set Token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();",
+									"if (jsonData.data && jsonData.data.token) {",
+									"    pm.collectionVariables.set(\"token\", jsonData.data.token);",
+									"    console.log(\"Token JWT berhasil disimpan ke dalam variabel koleksi!\");",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"owner@apotek.com\",\n    \"password\": \"owner123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Master Obat",
+			"item": [
+				{
+					"name": "Get All Obat",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/obat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"obat"
+							]
+						}
+					}
+				},
+				{
+					"name": "Store Obat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nama\": \"Amoxicillin 500mg\",\n    \"hargaJual\": 25000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/obat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"obat"
+							]
+						}
+					}
+				},
+				{
+					"name": "Check Kedaluwarsa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/obat/kedaluwarsa",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"obat",
+								"kedaluwarsa"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Obat By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/obat/ISI_DENGAN_ID_OBAT",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"obat",
+								"ISI_DENGAN_ID_OBAT"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Obat",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nama\": \"Amoxicillin 500mg (Revisi)\",\n    \"hargaJual\": 30000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/obat/ISI_DENGAN_ID_OBAT",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"obat",
+								"ISI_DENGAN_ID_OBAT"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Obat",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/obat/ISI_DENGAN_ID_OBAT",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"obat",
+								"ISI_DENGAN_ID_OBAT"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "3. Master Supplier",
+			"item": [
+				{
+					"name": "Get All Supplier",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/supplier",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"supplier"
+							]
+						}
+					}
+				},
+				{
+					"name": "Store Supplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nama\": \"PT Kimia Farma Tbk\",\n    \"alamat\": \"Jl. Sudirman No. 123, Jakarta\",\n    \"telepon\": \"081234567890\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/supplier",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"supplier"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "4. Transaksi Penjualan",
+			"item": [
+				{
+					"name": "Get All Penjualan",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/penjualan",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"penjualan"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Penjualan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"total\": 50000,\n    \"details\": [\n        {\n            \"obatId\": \"ISI_DENGAN_ID_OBAT\",\n            \"quantity\": 2,\n            \"harga\": 25000\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/penjualan",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"penjualan"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "5. Transaksi Pembelian",
+			"item": [
+				{
+					"name": "Get All Pembelian",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/pembelian",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pembelian"
+							]
+						}
+					}
+				},
+				{
+					"name": "Create Pemesanan (Order)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"supplierId\": \"ISI_DENGAN_ID_SUPPLIER\",\n    \"details\": [\n        {\n            \"obatId\": \"ISI_DENGAN_ID_OBAT\",\n            \"quantityOrdered\": 100\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/pembelian",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pembelian"
+							]
+						}
+					}
+				},
+				{
+					"name": "Terima Barang (Receive)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"details\": [\n        {\n            \"detailId\": \"ISI_DENGAN_ID_DETAIL_PEMBELIAN\",\n            \"quantityReceived\": 100,\n            \"tanggalKedaluwarsa\": \"2026-12-31T23:59:59Z\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/pembelian/ISI_ID_TRANSAKSI_PEMBELIAN/receive",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"pembelian",
+								"ISI_ID_TRANSAKSI_PEMBELIAN",
+								"receive"
+							]
+						}
+					}
+				}
+			]
+		}
+	]
+}
