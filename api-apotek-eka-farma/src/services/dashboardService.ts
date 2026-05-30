@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '../lib/prisma';
 
 export const getDashboardMetricsService = async () => {
     // 1. Total Jenis Obat

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as penjualanService from '@/services/penjualanService';
+import * as penjualanService from '../services/penjualanService';
 
 export const createPenjualan = async (req: Request, res: Response) => {
     try {

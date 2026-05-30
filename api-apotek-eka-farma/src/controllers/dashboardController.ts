@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as dashboardService from '@/services/dashboardService';
+import * as dashboardService from '../services/dashboardService';
 
 export const getDashboardMetrics = async (req: Request, res: Response) => {
     try {

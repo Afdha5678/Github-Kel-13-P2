@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import * as supplierController from '@/controllers/supplierController';
-import { authenticateToken } from '@/middlewares/authMiddleware';
-import { formRequest } from '@/middlewares/formRequest';
-import { StoreSupplierRequest } from '@/requests/supplier/StoreSupplierRequest';
-import { UpdateSupplierRequest } from '@/requests/supplier/UpdateSupplierRequest';
+import * as supplierController from '../controllers/supplierController';
+import { authenticateToken } from '../middlewares/authMiddleware';
+import { formRequest } from '../middlewares/formRequest';
+import { StoreSupplierRequest } from '../requests/supplier/StoreSupplierRequest';
+import { UpdateSupplierRequest } from '../requests/supplier/UpdateSupplierRequest';
 
 const router = Router();
 
