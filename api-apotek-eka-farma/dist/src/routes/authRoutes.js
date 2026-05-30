@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as authController from '@/controllers/authController';
+import * as authController from '../controllers/authController';
 const router = Router();
 // Rute registrasi pengguna (Supaya kamu bisa punya user untuk dites login)
 router.post('/register', authController.register);

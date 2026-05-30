@@ -1,4 +1,4 @@
-import * as pembelianService from '@/services/pembelianService';
+import * as pembelianService from '../services/pembelianService';
 export const createPembelian = async (req, res) => {
     try {
         const newPembelian = await pembelianService.createPembelianService(req.body);

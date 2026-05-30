@@ -1,4 +1,4 @@
-import * as penjualanService from '@/services/penjualanService';
+import * as penjualanService from '../services/penjualanService';
 export const createPenjualan = async (req, res) => {
     try {
         const newPenjualan = await penjualanService.createPenjualanService(req.body);

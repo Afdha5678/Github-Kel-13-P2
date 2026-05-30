@@ -1,4 +1,4 @@
-import * as userService from '@/services/userService';
+import * as userService from '../services/userService';
 export const getProfile = async (req, res) => {
     try {
         const userId = req.user?.userId;

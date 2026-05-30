@@ -1,4 +1,4 @@
-import * as supplierService from '@/services/supplierService';
+import * as supplierService from '../services/supplierService';
 export const createSupplier = async (req, res) => {
     try {
         const newSupplier = await supplierService.createSupplierService(req.body);

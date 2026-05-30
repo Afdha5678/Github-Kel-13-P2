@@ -1,4 +1,4 @@
-import * as obatService from '@/services/obatService';
+import * as obatService from '../services/obatService';
 /**
  * MENGELOLA HTTP REQUEST UNTUK ENTITAS OBAT
  * Memisahkan logika HTTP dari logika bisnis (Service Layer)

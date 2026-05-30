@@ -1,4 +1,4 @@
-import * as dashboardService from '@/services/dashboardService';
+import * as dashboardService from '../services/dashboardService';
 export const getDashboardMetrics = async (req, res) => {
     try {
         const data = await dashboardService.getDashboardMetricsService();

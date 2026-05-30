@@ -4,13 +4,13 @@ import cors from 'cors';
 import 'dotenv/config'; // Memuat variabel dari file .env secara otomatis
 process.env.TZ = 'Asia/Jakarta';
 // Import Peta Jalur (Routes)
-import obatRoutes from '@/routes/obatRoutes';
-import authRoutes from '@/routes/authRoutes';
-import supplierRoutes from '@/routes/supplierRoutes';
-import penjualanRoutes from '@/routes/penjualanRoutes';
-import pembelianRoutes from '@/routes/pembelianRoutes';
-import dashboardRoutes from '@/routes/dashboardRoutes';
-import userRoutes from '@/routes/userRoutes';
+import obatRoutes from './routes/obatRoutes';
+import authRoutes from './routes/authRoutes';
+import supplierRoutes from './routes/supplierRoutes';
+import penjualanRoutes from './routes/penjualanRoutes';
+import pembelianRoutes from './routes/pembelianRoutes';
+import dashboardRoutes from './routes/dashboardRoutes';
+import userRoutes from './routes/userRoutes';
 const app = express();
 /**
  * 1. GLOBAL MIDDLEWARES

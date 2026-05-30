@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/prisma';
+import { prisma } from '../lib/prisma';
 export const createPenjualanService = async (data) => {
     // Gunakan Prisma Transaction karena kita melakukan insert transaksi, insert detail, dan memotong stok
     return await prisma.$transaction(async (tx) => {
