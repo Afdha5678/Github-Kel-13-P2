@@ -1,0 +1,7 @@
+export default function Logo({ className }: { className?: string }) {
+    return (
+        <svg className={className} viewBox="0 0 532 532" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M516 266C516 404.071 404.071 516 266 516M516 266H402.5M516 266C516 199.505 490.04 139.074 447.701 94.2878M266 516C127.929 516 16 404.071 16 266M266 516V16M16 266C16 127.929 127.929 16 266 16M16 266H177.5M266 16C337.576 16 402.127 46.0797 447.701 94.2878M175.5 83H96M185 459H107M266 276L447.5 94.5M447.5 94.5L374 362.5M447.5 94.5L447.701 94.2878M441.5 444L286 256" stroke="currentColor" strokeWidth="32" />
+        </svg>
+    )
+}
