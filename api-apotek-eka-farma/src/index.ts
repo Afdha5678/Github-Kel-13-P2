@@ -2,7 +2,7 @@
 // src/index.ts
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import 'dotenv/config'; // Memuat variabel dari file .env secara otomatis
+// Vercel and local will load env variables via other means or natively
 
 process.env.TZ = 'Asia/Jakarta';
 
