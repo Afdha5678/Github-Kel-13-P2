@@ -1,3 +1,4 @@
+
 // src/index.ts
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
@@ -86,12 +87,15 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
  */
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-    console.log(`=================================================`);
-    console.log(`🚀 Server Backend Apotek berjalan di port: ${PORT}`);
-    console.log(`🔗 Base URL: http://localhost:${PORT}/api`);
-    console.log(`🩺 Health Check: http://localhost:${PORT}/api/health`);
-    console.log(`=================================================`);
-});
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`=================================================`);
+        console.log(`🚀 Server Backend Apotek berjalan di port: ${PORT}`);
+        console.log(`🔗 Base URL: http://localhost:${PORT}/api`);
+        console.log(`🩺 Health Check: http://localhost:${PORT}/api/health`);
+        console.log(`=================================================`);
+    });
+}
 
 export default app;
+module.exports = app;
