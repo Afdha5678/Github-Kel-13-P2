@@ -38,7 +38,8 @@ app.use('/uploads', express_1.default.static(path_1.default.join(process.cwd(), 
 app.get('/api/health', (req, res) => {
     res.status(200).json({
         success: true,
-        message: '🚀 API Server Apotek Eka Farma beroperasi secara normal!'
+        message: '🚀 API Server Apotek Eka Farma beroperasi secara normal!',
+        db_configured: !!process.env.DATABASE_URL
     });
 });
 app.use('/api/obat', obatRoutes_1.default);
@@ -74,11 +75,14 @@ app.use((err, req, res, next) => {
  * Menjalankan aplikasi pada port yang ditentukan di .env
  */
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`=================================================`);
-    console.log(`🚀 Server Backend Apotek berjalan di port: ${PORT}`);
-    console.log(`🔗 Base URL: http://localhost:${PORT}/api`);
-    console.log(`🩺 Health Check: http://localhost:${PORT}/api/health`);
-    console.log(`=================================================`);
-});
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`=================================================`);
+        console.log(`🚀 Server Backend Apotek berjalan di port: ${PORT}`);
+        console.log(`🔗 Base URL: http://localhost:${PORT}/api`);
+        console.log(`🩺 Health Check: http://localhost:${PORT}/api/health`);
+        console.log(`=================================================`);
+    });
+}
 exports.default = app;
+module.exports = app;

@@ -10,9 +10,9 @@ const pool = connectionString ? new Pool({ connectionString }) : null;
 const adapter = pool ? new PrismaPg(pool) : null;
 let prisma: PrismaClient;
 try {
-  prisma = adapter ? new PrismaClient({ adapter }) : new PrismaClient({
-    datasourceUrl: process.env.DATABASE_URL || "postgresql://dummy:dummy@localhost:5432/dummy"
-  });
+  // In Prisma 7, if we use the adapter engine, we MUST pass either adapter or accelerateUrl.
+  // If the env variable is missing, we pass a dummy adapter to prevent synchronous crash, or just catch it.
+  prisma = new PrismaClient((adapter ? { adapter } : {}) as any);
 } catch (error) {
   console.error("Prisma init error:", error);
   prisma = {} as any;
