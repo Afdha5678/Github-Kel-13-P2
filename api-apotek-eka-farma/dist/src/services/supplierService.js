@@ -1,6 +1,9 @@
-import { prisma } from '../lib/prisma';
-export const createSupplierService = async (data) => {
-    return await prisma.supplier.create({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteSupplierService = exports.updateSupplierService = exports.getSupplierByIdService = exports.getAllSupplierService = exports.createSupplierService = void 0;
+const prisma_1 = require("../lib/prisma");
+const createSupplierService = async (data) => {
+    return await prisma_1.prisma.supplier.create({
         data: {
             nama: data.nama,
             alamat: data.alamat,
@@ -8,8 +11,9 @@ export const createSupplierService = async (data) => {
         }
     });
 };
-export const getAllSupplierService = async (search) => {
-    return await prisma.supplier.findMany({
+exports.createSupplierService = createSupplierService;
+const getAllSupplierService = async (search) => {
+    return await prisma_1.prisma.supplier.findMany({
         where: search ? {
             nama: {
                 contains: search,
@@ -19,8 +23,9 @@ export const getAllSupplierService = async (search) => {
         orderBy: { createdAt: 'desc' }
     });
 };
-export const getSupplierByIdService = async (id) => {
-    const supplier = await prisma.supplier.findUnique({
+exports.getAllSupplierService = getAllSupplierService;
+const getSupplierByIdService = async (id) => {
+    const supplier = await prisma_1.prisma.supplier.findUnique({
         where: { id }
     });
     if (!supplier) {
@@ -28,16 +33,19 @@ export const getSupplierByIdService = async (id) => {
     }
     return supplier;
 };
-export const updateSupplierService = async (id, data) => {
-    return await prisma.supplier.update({
+exports.getSupplierByIdService = getSupplierByIdService;
+const updateSupplierService = async (id, data) => {
+    return await prisma_1.prisma.supplier.update({
         where: { id },
         data: {
             ...data
         }
     });
 };
-export const deleteSupplierService = async (id) => {
-    return await prisma.supplier.delete({
+exports.updateSupplierService = updateSupplierService;
+const deleteSupplierService = async (id) => {
+    return await prisma_1.prisma.supplier.delete({
         where: { id }
     });
 };
+exports.deleteSupplierService = deleteSupplierService;

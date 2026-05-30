@@ -1,5 +1,8 @@
-import { ZodError } from 'zod';
-export const formRequest = (requestClass) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.formRequest = void 0;
+const zod_1 = require("zod");
+const formRequest = (requestClass) => {
     return async (req, res, next) => {
         try {
             // 1. Otorisasi (Cek Hak Akses)
@@ -26,7 +29,7 @@ export const formRequest = (requestClass) => {
             next();
         }
         catch (error) {
-            if (error instanceof ZodError) {
+            if (error instanceof zod_1.ZodError) {
                 const errorMessages = error.issues.map((err) => ({
                     field: err.path.join('.'),
                     message: err.message,
@@ -41,3 +44,4 @@ export const formRequest = (requestClass) => {
         }
     };
 };
+exports.formRequest = formRequest;

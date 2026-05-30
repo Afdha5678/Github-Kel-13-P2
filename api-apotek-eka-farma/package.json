@@ -4,7 +4,6 @@
   "description": "API untuk Apotek Eka Farma",
   "license": "ISC",
   "author": "",
-  "type": "module",
   "main": "src/index.ts",
   "scripts": {
     "dev": "tsx watch src/index.ts",

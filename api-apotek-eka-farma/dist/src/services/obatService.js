@@ -1,10 +1,16 @@
-import { prisma } from "../lib/prisma";
-import fs from 'fs';
-import path from 'path';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.checkObatKedaluwarsaService = exports.deleteObatService = exports.updateObatService = exports.getObatByIdService = exports.getAllObatService = exports.createObatService = void 0;
+const prisma_1 = require("../lib/prisma");
+const fs_1 = __importDefault(require("fs"));
+const path_1 = __importDefault(require("path"));
 // --- BUSINESS LOGIC LAYER (SERVICES) ---
 // 1. CREATE: Tambah Obat
-export const createObatService = async (data) => {
-    return await prisma.obat.create({
+const createObatService = async (data) => {
+    return await prisma_1.prisma.obat.create({
         data: {
             nama: data.nama,
             hargaJual: data.hargaJual,
@@ -15,9 +21,10 @@ export const createObatService = async (data) => {
         include: { stok: true }
     });
 };
+exports.createObatService = createObatService;
 // 2. READ: Ambil Semua Data Obat
-export const getAllObatService = async (search) => {
-    const obats = await prisma.obat.findMany({
+const getAllObatService = async (search) => {
+    const obats = await prisma_1.prisma.obat.findMany({
         where: search ? {
             nama: {
                 contains: search,
@@ -44,9 +51,10 @@ export const getAllObatService = async (search) => {
         };
     });
 };
+exports.getAllObatService = getAllObatService;
 // 3. READ: Ambil Data Obat Spesifik Berdasarkan ID
-export const getObatByIdService = async (id) => {
-    const obat = await prisma.obat.findUnique({
+const getObatByIdService = async (id) => {
+    const obat = await prisma_1.prisma.obat.findUnique({
         where: { id },
         include: { stok: true }
     });
@@ -56,16 +64,17 @@ export const getObatByIdService = async (id) => {
     const totalStok = obat.stok.reduce((sum, item) => sum + item.jumlah, 0);
     return { ...obat, totalStok };
 };
+exports.getObatByIdService = getObatByIdService;
 // 4. UPDATE: Perbarui Data Obat
-export const updateObatService = async (id, data) => {
+const updateObatService = async (id, data) => {
     // Jika ada gambar baru yang diunggah, kita perlu menghapus gambar lama
     if (data.image) {
-        const oldObat = await prisma.obat.findUnique({ where: { id } });
+        const oldObat = await prisma_1.prisma.obat.findUnique({ where: { id } });
         if (oldObat && oldObat.image && oldObat.image !== data.image) {
             try {
-                const oldImagePath = path.join(process.cwd(), 'public', oldObat.image);
-                if (fs.existsSync(oldImagePath)) {
-                    fs.unlinkSync(oldImagePath);
+                const oldImagePath = path_1.default.join(process.cwd(), 'public', oldObat.image);
+                if (fs_1.default.existsSync(oldImagePath)) {
+                    fs_1.default.unlinkSync(oldImagePath);
                 }
             }
             catch (error) {
@@ -73,7 +82,7 @@ export const updateObatService = async (id, data) => {
             }
         }
     }
-    return await prisma.obat.update({
+    return await prisma_1.prisma.obat.update({
         where: { id },
         data: {
             ...data
@@ -81,19 +90,20 @@ export const updateObatService = async (id, data) => {
         include: { stok: true }
     });
 };
+exports.updateObatService = updateObatService;
 // 5. DELETE: Hapus Data Obat
-export const deleteObatService = async (id) => {
+const deleteObatService = async (id) => {
     // Cari data obat untuk mendapatkan path gambar
-    const obat = await prisma.obat.findUnique({
+    const obat = await prisma_1.prisma.obat.findUnique({
         where: { id }
     });
     if (obat && obat.image) {
         try {
             // obat.image is formatted like "/uploads/filename.jpg"
             // We need to resolve it to "public/uploads/filename.jpg"
-            const imagePath = path.join(process.cwd(), 'public', obat.image);
-            if (fs.existsSync(imagePath)) {
-                fs.unlinkSync(imagePath);
+            const imagePath = path_1.default.join(process.cwd(), 'public', obat.image);
+            if (fs_1.default.existsSync(imagePath)) {
+                fs_1.default.unlinkSync(imagePath);
             }
         }
         catch (error) {
@@ -101,15 +111,16 @@ export const deleteObatService = async (id) => {
         }
     }
     // onCascade Delete will remove related Stok
-    return await prisma.obat.delete({
+    return await prisma_1.prisma.obat.delete({
         where: { id }
     });
 };
+exports.deleteObatService = deleteObatService;
 // 6. BUSINESS RULE: Pengecekan Kedaluwarsa
-export const checkObatKedaluwarsaService = async () => {
+const checkObatKedaluwarsaService = async () => {
     const hariIni = new Date();
     // Mengambil stok yang tanggal kedaluwarsanya kurang dari (lt) atau sama dengan (lte) hari ini
-    return await prisma.stok.findMany({
+    return await prisma_1.prisma.stok.findMany({
         where: {
             tanggalKedaluwarsa: {
                 lte: hariIni
@@ -121,3 +132,4 @@ export const checkObatKedaluwarsaService = async () => {
         include: { obat: true }
     });
 };
+exports.checkObatKedaluwarsaService = checkObatKedaluwarsaService;

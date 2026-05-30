@@ -1,7 +1,13 @@
-import { prisma } from '../lib/prisma';
-import bcrypt from 'bcrypt';
-export const getProfileService = async (userId) => {
-    const user = await prisma.user.findUnique({
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteUserService = exports.updateUserService = exports.createUserService = exports.getUserByIdService = exports.getAllUsersService = exports.updateProfileService = exports.getProfileService = void 0;
+const prisma_1 = require("../lib/prisma");
+const bcrypt_1 = __importDefault(require("bcrypt"));
+const getProfileService = async (userId) => {
+    const user = await prisma_1.prisma.user.findUnique({
         where: { id: userId }
     });
     if (!user) {
@@ -10,10 +16,11 @@ export const getProfileService = async (userId) => {
     const { password, ...userWithoutPassword } = user;
     return userWithoutPassword;
 };
-export const updateProfileService = async (userId, data) => {
+exports.getProfileService = getProfileService;
+const updateProfileService = async (userId, data) => {
     // Cek apakah email sudah digunakan oleh user lain
     if (data.email) {
-        const existingUser = await prisma.user.findFirst({
+        const existingUser = await prisma_1.prisma.user.findFirst({
             where: {
                 email: data.email,
                 NOT: { id: userId }
@@ -29,17 +36,18 @@ export const updateProfileService = async (userId, data) => {
     };
     // Jika password diisi, hash password baru
     if (data.password && data.password.trim() !== '') {
-        updateData.password = await bcrypt.hash(data.password, 10);
+        updateData.password = await bcrypt_1.default.hash(data.password, 10);
     }
-    const user = await prisma.user.update({
+    const user = await prisma_1.prisma.user.update({
         where: { id: userId },
         data: updateData
     });
     const { password, ...userWithoutPassword } = user;
     return userWithoutPassword;
 };
-export const getAllUsersService = async (search) => {
-    return await prisma.user.findMany({
+exports.updateProfileService = updateProfileService;
+const getAllUsersService = async (search) => {
+    return await prisma_1.prisma.user.findMany({
         where: search ? {
             OR: [
                 { nama: { contains: search, mode: 'insensitive' } },
@@ -57,8 +65,9 @@ export const getAllUsersService = async (search) => {
         orderBy: { createdAt: 'desc' }
     });
 };
-export const getUserByIdService = async (id) => {
-    const user = await prisma.user.findUnique({
+exports.getAllUsersService = getAllUsersService;
+const getUserByIdService = async (id) => {
+    const user = await prisma_1.prisma.user.findUnique({
         where: { id },
         select: {
             id: true,
@@ -73,15 +82,16 @@ export const getUserByIdService = async (id) => {
         throw new Error('User tidak ditemukan');
     return user;
 };
-export const createUserService = async (data) => {
-    const existingUser = await prisma.user.findUnique({
+exports.getUserByIdService = getUserByIdService;
+const createUserService = async (data) => {
+    const existingUser = await prisma_1.prisma.user.findUnique({
         where: { email: data.email }
     });
     if (existingUser) {
         throw new Error('Email sudah terdaftar');
     }
-    const hashedPassword = await bcrypt.hash(data.password, 10);
-    const user = await prisma.user.create({
+    const hashedPassword = await bcrypt_1.default.hash(data.password, 10);
+    const user = await prisma_1.prisma.user.create({
         data: {
             nama: data.nama,
             email: data.email,
@@ -92,9 +102,10 @@ export const createUserService = async (data) => {
     const { password, ...userWithoutPassword } = user;
     return userWithoutPassword;
 };
-export const updateUserService = async (id, data) => {
+exports.createUserService = createUserService;
+const updateUserService = async (id, data) => {
     if (data.email) {
-        const existingUser = await prisma.user.findFirst({
+        const existingUser = await prisma_1.prisma.user.findFirst({
             where: {
                 email: data.email,
                 NOT: { id }
@@ -110,17 +121,19 @@ export const updateUserService = async (id, data) => {
         role: data.role
     };
     if (data.password && data.password.trim() !== '') {
-        updateData.password = await bcrypt.hash(data.password, 10);
+        updateData.password = await bcrypt_1.default.hash(data.password, 10);
     }
-    const user = await prisma.user.update({
+    const user = await prisma_1.prisma.user.update({
         where: { id },
         data: updateData
     });
     const { password, ...userWithoutPassword } = user;
     return userWithoutPassword;
 };
-export const deleteUserService = async (id) => {
-    return await prisma.user.delete({
+exports.updateUserService = updateUserService;
+const deleteUserService = async (id) => {
+    return await prisma_1.prisma.user.delete({
         where: { id }
     });
 };
+exports.deleteUserService = deleteUserService;

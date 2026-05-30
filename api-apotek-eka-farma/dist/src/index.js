@@ -1,30 +1,35 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
 // src/index.ts
-import express from 'express';
-import cors from 'cors';
-import 'dotenv/config'; // Memuat variabel dari file .env secara otomatis
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+require("dotenv/config"); // Memuat variabel dari file .env secara otomatis
 process.env.TZ = 'Asia/Jakarta';
 // Import Peta Jalur (Routes)
-import obatRoutes from './routes/obatRoutes';
-import authRoutes from './routes/authRoutes';
-import supplierRoutes from './routes/supplierRoutes';
-import penjualanRoutes from './routes/penjualanRoutes';
-import pembelianRoutes from './routes/pembelianRoutes';
-import dashboardRoutes from './routes/dashboardRoutes';
-import userRoutes from './routes/userRoutes';
-const app = express();
+const obatRoutes_1 = __importDefault(require("./routes/obatRoutes"));
+const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+const supplierRoutes_1 = __importDefault(require("./routes/supplierRoutes"));
+const penjualanRoutes_1 = __importDefault(require("./routes/penjualanRoutes"));
+const pembelianRoutes_1 = __importDefault(require("./routes/pembelianRoutes"));
+const dashboardRoutes_1 = __importDefault(require("./routes/dashboardRoutes"));
+const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
+const app = (0, express_1.default)();
 /**
  * 1. GLOBAL MIDDLEWARES
  * Komponen pencegat yang memproses setiap request sebelum masuk ke Route
  */
 // Mengizinkan frontend (Next.js) di port berbeda untuk memanggil API ini
-app.use(cors());
+app.use((0, cors_1.default)());
 // Wajib: Mengizinkan Express membaca payload berformat JSON dari req.body
-app.use(express.json());
-import path from 'path';
+app.use(express_1.default.json());
+const path_1 = __importDefault(require("path"));
 // Opsional: Mengizinkan Express membaca data form-urlencoded standar
-app.use(express.urlencoded({ extended: true }));
+app.use(express_1.default.urlencoded({ extended: true }));
 // Sajikan folder public secara statis agar gambar bisa diakses (contoh: /uploads/nama_file.jpg)
-app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
+app.use('/uploads', express_1.default.static(path_1.default.join(process.cwd(), 'public/uploads')));
 /**
  * 2. ENDPOINT MAPPING (ROUTES)
  * Menyambungkan URL utama ke modul router masing-masing entitas
@@ -36,13 +41,13 @@ app.get('/api/health', (req, res) => {
         message: '🚀 API Server Apotek Eka Farma beroperasi secara normal!'
     });
 });
-app.use('/api/obat', obatRoutes);
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/supplier', supplierRoutes);
-app.use('/api/penjualan', penjualanRoutes);
-app.use('/api/pembelian', pembelianRoutes);
-app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/obat', obatRoutes_1.default);
+app.use('/api/auth', authRoutes_1.default);
+app.use('/api/users', userRoutes_1.default);
+app.use('/api/supplier', supplierRoutes_1.default);
+app.use('/api/penjualan', penjualanRoutes_1.default);
+app.use('/api/pembelian', pembelianRoutes_1.default);
+app.use('/api/dashboard', dashboardRoutes_1.default);
 /**
  * 3. GLOBAL ERROR HANDLER (FALLBACKS)
  * Menjaga server tetap hidup dan memberikan response rapi jika terjadi error
@@ -76,4 +81,4 @@ app.listen(PORT, () => {
     console.log(`🩺 Health Check: http://localhost:${PORT}/api/health`);
     console.log(`=================================================`);
 });
-export default app;
+exports.default = app;

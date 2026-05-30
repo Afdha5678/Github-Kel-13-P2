@@ -1,21 +1,27 @@
-import multer from 'multer';
-import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
-import fs from 'fs';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.upload = void 0;
+const multer_1 = __importDefault(require("multer"));
+const path_1 = __importDefault(require("path"));
+const uuid_1 = require("uuid");
+const fs_1 = __importDefault(require("fs"));
 // Pastikan folder uploads ada
-const uploadDir = path.join(process.cwd(), 'public/uploads');
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
+const uploadDir = path_1.default.join(process.cwd(), 'public/uploads');
+if (!fs_1.default.existsSync(uploadDir)) {
+    fs_1.default.mkdirSync(uploadDir, { recursive: true });
 }
 // Konfigurasi penyimpanan multer
-const storage = multer.diskStorage({
+const storage = multer_1.default.diskStorage({
     destination: (req, file, cb) => {
         cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
         // Buat nama file unik: UUID + ekstensi asli
-        const ext = path.extname(file.originalname);
-        const fileName = `${uuidv4()}${ext}`;
+        const ext = path_1.default.extname(file.originalname);
+        const fileName = `${(0, uuid_1.v4)()}${ext}`;
         cb(null, fileName);
     }
 });
@@ -29,7 +35,7 @@ const fileFilter = (req, file, cb) => {
         cb(new Error('Format file tidak didukung. Harap upload gambar (JPEG, PNG, WEBP).'));
     }
 };
-export const upload = multer({
+exports.upload = (0, multer_1.default)({
     storage,
     limits: {
         fileSize: 5 * 1024 * 1024 // Batas ukuran 5MB

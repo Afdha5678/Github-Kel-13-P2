@@ -1,6 +1,12 @@
-import jwt from 'jsonwebtoken';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.authorizeRole = exports.authenticateToken = void 0;
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const JWT_SECRET = process.env.JWT_SECRET || 'fallback_secret_key';
-export const authenticateToken = (req, res, next) => {
+const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1]; // Format: "Bearer <token>"
     if (!token) {
@@ -10,7 +16,7 @@ export const authenticateToken = (req, res, next) => {
         });
     }
     try {
-        const decoded = jwt.verify(token, JWT_SECRET);
+        const decoded = jsonwebtoken_1.default.verify(token, JWT_SECRET);
         // Sisipkan hasil dekode ke dalam request
         req.user = decoded;
         next();
@@ -22,7 +28,8 @@ export const authenticateToken = (req, res, next) => {
         });
     }
 };
-export const authorizeRole = (roles) => {
+exports.authenticateToken = authenticateToken;
+const authorizeRole = (roles) => {
     return (req, res, next) => {
         if (!req.user || !roles.includes(req.user.role)) {
             return res.status(403).json({
@@ -33,3 +40,4 @@ export const authorizeRole = (roles) => {
         next();
     };
 };
+exports.authorizeRole = authorizeRole;

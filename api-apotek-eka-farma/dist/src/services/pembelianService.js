@@ -1,6 +1,9 @@
-import { prisma } from '../lib/prisma';
-export const createPembelianService = async (data) => {
-    return await prisma.transaksiPembelian.create({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deletePembelianService = exports.getPembelianByIdService = exports.getAllPembelianService = exports.receivePembelianService = exports.createPembelianService = void 0;
+const prisma_1 = require("../lib/prisma");
+const createPembelianService = async (data) => {
+    return await prisma_1.prisma.transaksiPembelian.create({
         data: {
             status: 'PENDING',
             supplierId: data.supplierId,
@@ -15,8 +18,9 @@ export const createPembelianService = async (data) => {
         include: { details: true }
     });
 };
-export const receivePembelianService = async (transaksiId, data) => {
-    return await prisma.$transaction(async (tx) => {
+exports.createPembelianService = createPembelianService;
+const receivePembelianService = async (transaksiId, data) => {
+    return await prisma_1.prisma.$transaction(async (tx) => {
         const transaksi = await tx.transaksiPembelian.findUnique({ where: { id: transaksiId } });
         if (!transaksi || transaksi.status === 'COMPLETED') {
             throw new Error('Transaksi tidak valid atau sudah selesai');
@@ -63,8 +67,9 @@ export const receivePembelianService = async (transaksiId, data) => {
         };
     });
 };
-export const getAllPembelianService = async (search) => {
-    return await prisma.transaksiPembelian.findMany({
+exports.receivePembelianService = receivePembelianService;
+const getAllPembelianService = async (search) => {
+    return await prisma_1.prisma.transaksiPembelian.findMany({
         where: search ? {
             id: {
                 contains: search,
@@ -80,8 +85,9 @@ export const getAllPembelianService = async (search) => {
         orderBy: { createdAt: 'desc' }
     });
 };
-export const getPembelianByIdService = async (id) => {
-    const transaksi = await prisma.transaksiPembelian.findUnique({
+exports.getAllPembelianService = getAllPembelianService;
+const getPembelianByIdService = async (id) => {
+    const transaksi = await prisma_1.prisma.transaksiPembelian.findUnique({
         where: { id },
         include: {
             details: {
@@ -95,8 +101,9 @@ export const getPembelianByIdService = async (id) => {
     }
     return transaksi;
 };
-export const deletePembelianService = async (id) => {
-    return await prisma.$transaction(async (tx) => {
+exports.getPembelianByIdService = getPembelianByIdService;
+const deletePembelianService = async (id) => {
+    return await prisma_1.prisma.$transaction(async (tx) => {
         const transaksi = await tx.transaksiPembelian.findUnique({
             where: { id },
             include: { details: true }
@@ -137,3 +144,4 @@ export const deletePembelianService = async (id) => {
         });
     });
 };
+exports.deletePembelianService = deletePembelianService;

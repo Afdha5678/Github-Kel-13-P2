@@ -1,7 +1,10 @@
-import { prisma } from '../lib/prisma';
-export const createPenjualanService = async (data) => {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deletePenjualanService = exports.getPenjualanByIdService = exports.getAllPenjualanService = exports.createPenjualanService = void 0;
+const prisma_1 = require("../lib/prisma");
+const createPenjualanService = async (data) => {
     // Gunakan Prisma Transaction karena kita melakukan insert transaksi, insert detail, dan memotong stok
-    return await prisma.$transaction(async (tx) => {
+    return await prisma_1.prisma.$transaction(async (tx) => {
         const now = new Date();
         // 1. Validasi stok cukup untuk setiap item (agregasi dari semua stok yang tidak kedaluwarsa)
         for (const item of data.details) {
@@ -61,8 +64,9 @@ export const createPenjualanService = async (data) => {
         return penjualan;
     });
 };
-export const getAllPenjualanService = async (search) => {
-    return await prisma.transaksiPenjualan.findMany({
+exports.createPenjualanService = createPenjualanService;
+const getAllPenjualanService = async (search) => {
+    return await prisma_1.prisma.transaksiPenjualan.findMany({
         where: search ? {
             id: {
                 contains: search,
@@ -77,8 +81,9 @@ export const getAllPenjualanService = async (search) => {
         orderBy: { createdAt: 'desc' }
     });
 };
-export const getPenjualanByIdService = async (id) => {
-    const transaksi = await prisma.transaksiPenjualan.findUnique({
+exports.getAllPenjualanService = getAllPenjualanService;
+const getPenjualanByIdService = async (id) => {
+    const transaksi = await prisma_1.prisma.transaksiPenjualan.findUnique({
         where: { id },
         include: {
             details: {
@@ -91,8 +96,9 @@ export const getPenjualanByIdService = async (id) => {
     }
     return transaksi;
 };
-export const deletePenjualanService = async (id) => {
-    return await prisma.$transaction(async (tx) => {
+exports.getPenjualanByIdService = getPenjualanByIdService;
+const deletePenjualanService = async (id) => {
+    return await prisma_1.prisma.$transaction(async (tx) => {
         // 1. Dapatkan detail transaksi sebelum dihapus
         const transaksi = await tx.transaksiPenjualan.findUnique({
             where: { id },
@@ -148,3 +154,4 @@ export const deletePenjualanService = async (id) => {
         });
     });
 };
+exports.deletePenjualanService = deletePenjualanService;

@@ -1,13 +1,16 @@
-import { z } from 'zod';
-export const UpdateSupplierRequest = {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UpdateSupplierRequest = void 0;
+const zod_1 = require("zod");
+exports.UpdateSupplierRequest = {
     authorize: (req) => {
         return req.user?.role === 'OWNER' || req.user?.role === 'PEGAWAI';
     },
-    rules: z.object({
-        body: z.object({
-            nama: z.string().min(2, 'Minimal 2 karakter').optional(),
-            alamat: z.string().min(5, 'Alamat minimal 5 karakter').optional(),
-            telepon: z.string().min(8, 'Nomor telepon minimal 8 digit').optional(),
+    rules: zod_1.z.object({
+        body: zod_1.z.object({
+            nama: zod_1.z.string().min(2, 'Minimal 2 karakter').optional(),
+            alamat: zod_1.z.string().min(5, 'Alamat minimal 5 karakter').optional(),
+            telepon: zod_1.z.string().min(8, 'Nomor telepon minimal 8 digit').optional(),
         }),
     }),
 };
