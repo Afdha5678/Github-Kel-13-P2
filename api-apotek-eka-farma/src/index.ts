@@ -44,7 +44,8 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 app.get('/api/health', (req: Request, res: Response) => {
     res.status(200).json({
         success: true,
-        message: '🚀 API Server Apotek Eka Farma beroperasi secara normal!'
+        message: '🚀 API Server Apotek Eka Farma beroperasi secara normal!',
+        db_configured: !!process.env.DATABASE_URL
     });
 });
 
