@@ -8,6 +8,6 @@ const connectionString = process.env.DATABASE_URL || "";
 // Only initialize pool if connection string exists to prevent startup crash
 const pool = connectionString ? new Pool({ connectionString }) : null;
 const adapter = pool ? new PrismaPg(pool) : null;
-const prisma = new PrismaClient(adapter ? { adapter } : undefined);
+const prisma = new PrismaClient(adapter ? { adapter } : {});
 
 export { prisma };
