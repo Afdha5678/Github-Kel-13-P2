@@ -3,12 +3,15 @@ import { prisma } from '@/lib/prisma';
 export const createPenjualanService = async (data: any) => {
     // Gunakan Prisma Transaction karena kita melakukan insert transaksi, insert detail, dan memotong stok
     return await prisma.$transaction(async (tx) => {
-        // 1. Validasi stok cukup untuk setiap item (agregasi dari semua stok)
+        const now = new Date();
+
+        // 1. Validasi stok cukup untuk setiap item (agregasi dari semua stok yang tidak kedaluwarsa)
         for (const item of data.details) {
             const stoks = await tx.stok.findMany({
                 where: {
                     obatId: item.obatId,
-                    jumlah: { gt: 0 }
+                    jumlah: { gt: 0 },
+                    tanggalKedaluwarsa: { gt: now } // Exclude expired batches
                 },
                 orderBy: { tanggalKedaluwarsa: 'asc' } // FIFO: ambil yang paling cepat kedaluwarsa
             });
@@ -69,9 +72,100 @@ export const createPenjualanService = async (data: any) => {
     });
 };
 
-export const getAllPenjualanService = async () => {
+export const getAllPenjualanService = async (search?: string) => {
     return await prisma.transaksiPenjualan.findMany({
-        include: { details: true },
+        where: search ? {
+            id: {
+                contains: search,
+                mode: 'insensitive'
+            }
+        } : undefined,
+        include: { 
+            details: {
+                include: { obat: true }
+            }
+        },
         orderBy: { createdAt: 'desc' }
+    });
+};
+
+export const getPenjualanByIdService = async (id: string) => {
+    const transaksi = await prisma.transaksiPenjualan.findUnique({
+        where: { id },
+        include: { 
+            details: {
+                include: { obat: true }
+            }
+        }
+    });
+
+    if (!transaksi) {
+        throw new Error("Data transaksi tidak ditemukan");
+    }
+
+    return transaksi;
+};
+
+export const deletePenjualanService = async (id: string) => {
+    return await prisma.$transaction(async (tx) => {
+        // 1. Dapatkan detail transaksi sebelum dihapus
+        const transaksi = await tx.transaksiPenjualan.findUnique({
+            where: { id },
+            include: { details: true }
+        });
+
+        if (!transaksi) {
+            throw new Error("Transaksi tidak ditemukan");
+        }
+
+        // 2. Kembalikan stok (VOID)
+        for (const detail of transaksi.details) {
+            // Cari batch stok mana saja untuk obat ini. 
+            // Kita kembalikan ke batch yang paling akhir kadaluarsanya agar aman.
+            const stok = await tx.stok.findFirst({
+                where: { obatId: detail.obatId },
+                orderBy: { tanggalKedaluwarsa: 'desc' }
+            });
+
+            if (stok) {
+                await tx.stok.update({
+                    where: { id: stok.id },
+                    data: { jumlah: { increment: detail.quantity } }
+                });
+
+                await tx.stockMovement.create({
+                    data: {
+                        type: 'ADJUSTMENT', // Void / pengembalian
+                        quantity: detail.quantity,
+                        stokId: stok.id
+                    }
+                });
+            } else {
+                // Jika tidak ada stok record sama sekali untuk obat ini (jarang terjadi, tapi jaga-jaga)
+                const farFuture = new Date();
+                farFuture.setFullYear(farFuture.getFullYear() + 1); // Expiry 1 tahun dari sekarang
+                
+                const newStok = await tx.stok.create({
+                    data: {
+                        obatId: detail.obatId,
+                        jumlah: detail.quantity,
+                        tanggalKedaluwarsa: farFuture
+                    }
+                });
+
+                await tx.stockMovement.create({
+                    data: {
+                        type: 'ADJUSTMENT',
+                        quantity: detail.quantity,
+                        stokId: newStok.id
+                    }
+                });
+            }
+        }
+
+        // 3. Hapus Transaksi (Cascade delete akan menghapus DetailPenjualan)
+        return await tx.transaksiPenjualan.delete({
+            where: { id }
+        });
     });
 };

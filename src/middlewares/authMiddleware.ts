@@ -41,3 +41,15 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
         });
     }
 };
+
+export const authorizeRole = (roles: string[]) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (!req.user || !roles.includes(req.user.role)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Akses ditolak. Anda tidak memiliki izin untuk tindakan ini.',
+            });
+        }
+        next();
+    };
+};

@@ -65,3 +65,61 @@ export const loginService = async (data: any) => {
         token
     };
 };
+
+import crypto from 'crypto';
+import { sendResetPasswordEmail } from './emailService';
+
+export const forgotPasswordService = async (email: string) => {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user) {
+        throw new Error('Email tidak ditemukan');
+    }
+
+    // Buat token acak
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const hashedToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    // Kedaluwarsa dalam 1 jam
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() + 1);
+
+    await prisma.user.update({
+        where: { id: user.id },
+        data: {
+            resetPasswordToken: hashedToken,
+            resetPasswordExpires: expiresAt
+        }
+    });
+
+    // Kirim email
+    const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${resetToken}`;
+    await sendResetPasswordEmail(user.email, resetUrl);
+};
+
+export const resetPasswordService = async (token: string, newPassword: string) => {
+    const hashedToken = crypto.createHash('sha256').update(token).digest('hex');
+
+    const user = await prisma.user.findFirst({
+        where: {
+            resetPasswordToken: hashedToken,
+            resetPasswordExpires: {
+                gt: new Date()
+            }
+        }
+    });
+
+    if (!user) {
+        throw new Error('Token tidak valid atau sudah kedaluwarsa');
+    }
+
+    const newHashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await prisma.user.update({
+        where: { id: user.id },
+        data: {
+            password: newHashedPassword,
+            resetPasswordToken: null,
+            resetPasswordExpires: null
+        }
+    });
+};

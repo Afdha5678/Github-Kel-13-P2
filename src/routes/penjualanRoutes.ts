@@ -8,5 +8,7 @@ const router = Router();
 
 router.post('/', authenticateToken, formRequest(StorePenjualanRequest), penjualanController.createPenjualan);
 router.get('/', authenticateToken, penjualanController.getAllPenjualan);
+router.get('/:id', authenticateToken, penjualanController.getPenjualanById);
+router.delete('/:id', authenticateToken, penjualanController.deletePenjualan);
 
 export default router;

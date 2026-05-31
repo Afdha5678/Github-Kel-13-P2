@@ -85,7 +85,9 @@ export const UserScalarFieldEnum = {
   password: 'password',
   role: 'role',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  resetPasswordExpires: 'resetPasswordExpires',
+  resetPasswordToken: 'resetPasswordToken'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -96,7 +98,10 @@ export const ObatScalarFieldEnum = {
   nama: 'nama',
   hargaJual: 'hargaJual',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  image: 'image',
+  lokasiRak: 'lokasiRak',
+  satuan: 'satuan'
 } as const
 
 export type ObatScalarFieldEnum = (typeof ObatScalarFieldEnum)[keyof typeof ObatScalarFieldEnum]
@@ -105,10 +110,10 @@ export type ObatScalarFieldEnum = (typeof ObatScalarFieldEnum)[keyof typeof Obat
 export const StokScalarFieldEnum = {
   id: 'id',
   jumlah: 'jumlah',
-  tanggalKedaluwarsa: 'tanggalKedaluwarsa',
   obatId: 'obatId',
+  updatedAt: 'updatedAt',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  tanggalKedaluwarsa: 'tanggalKedaluwarsa'
 } as const
 
 export type StokScalarFieldEnum = (typeof StokScalarFieldEnum)[keyof typeof StokScalarFieldEnum]
@@ -196,4 +201,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

@@ -220,8 +220,8 @@ export type DetailPenjualanWhereInput = {
   harga?: Prisma.IntFilter<"DetailPenjualan"> | number
   transaksiId?: Prisma.StringFilter<"DetailPenjualan"> | string
   obatId?: Prisma.StringFilter<"DetailPenjualan"> | string
-  transaksi?: Prisma.XOR<Prisma.TransaksiPenjualanScalarRelationFilter, Prisma.TransaksiPenjualanWhereInput>
   obat?: Prisma.XOR<Prisma.ObatScalarRelationFilter, Prisma.ObatWhereInput>
+  transaksi?: Prisma.XOR<Prisma.TransaksiPenjualanScalarRelationFilter, Prisma.TransaksiPenjualanWhereInput>
 }
 
 export type DetailPenjualanOrderByWithRelationInput = {
@@ -230,8 +230,8 @@ export type DetailPenjualanOrderByWithRelationInput = {
   harga?: Prisma.SortOrder
   transaksiId?: Prisma.SortOrder
   obatId?: Prisma.SortOrder
-  transaksi?: Prisma.TransaksiPenjualanOrderByWithRelationInput
   obat?: Prisma.ObatOrderByWithRelationInput
+  transaksi?: Prisma.TransaksiPenjualanOrderByWithRelationInput
 }
 
 export type DetailPenjualanWhereUniqueInput = Prisma.AtLeast<{
@@ -243,8 +243,8 @@ export type DetailPenjualanWhereUniqueInput = Prisma.AtLeast<{
   harga?: Prisma.IntFilter<"DetailPenjualan"> | number
   transaksiId?: Prisma.StringFilter<"DetailPenjualan"> | string
   obatId?: Prisma.StringFilter<"DetailPenjualan"> | string
-  transaksi?: Prisma.XOR<Prisma.TransaksiPenjualanScalarRelationFilter, Prisma.TransaksiPenjualanWhereInput>
   obat?: Prisma.XOR<Prisma.ObatScalarRelationFilter, Prisma.ObatWhereInput>
+  transaksi?: Prisma.XOR<Prisma.TransaksiPenjualanScalarRelationFilter, Prisma.TransaksiPenjualanWhereInput>
 }, "id">
 
 export type DetailPenjualanOrderByWithAggregationInput = {
@@ -275,8 +275,8 @@ export type DetailPenjualanCreateInput = {
   id?: string
   quantity: number
   harga: number
-  transaksi: Prisma.TransaksiPenjualanCreateNestedOneWithoutDetailsInput
   obat: Prisma.ObatCreateNestedOneWithoutDetailPenjualanInput
+  transaksi: Prisma.TransaksiPenjualanCreateNestedOneWithoutDetailsInput
 }
 
 export type DetailPenjualanUncheckedCreateInput = {
@@ -291,8 +291,8 @@ export type DetailPenjualanUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
   harga?: Prisma.IntFieldUpdateOperationsInput | number
-  transaksi?: Prisma.TransaksiPenjualanUpdateOneRequiredWithoutDetailsNestedInput
   obat?: Prisma.ObatUpdateOneRequiredWithoutDetailPenjualanNestedInput
+  transaksi?: Prisma.TransaksiPenjualanUpdateOneRequiredWithoutDetailsNestedInput
 }
 
 export type DetailPenjualanUncheckedUpdateInput = {
@@ -608,8 +608,8 @@ export type DetailPenjualanSelect<ExtArgs extends runtime.Types.Extensions.Inter
   harga?: boolean
   transaksiId?: boolean
   obatId?: boolean
-  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["detailPenjualan"]>
 
 export type DetailPenjualanSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -618,8 +618,8 @@ export type DetailPenjualanSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   harga?: boolean
   transaksiId?: boolean
   obatId?: boolean
-  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["detailPenjualan"]>
 
 export type DetailPenjualanSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -628,8 +628,8 @@ export type DetailPenjualanSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   harga?: boolean
   transaksiId?: boolean
   obatId?: boolean
-  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["detailPenjualan"]>
 
 export type DetailPenjualanSelectScalar = {
@@ -642,23 +642,23 @@ export type DetailPenjualanSelectScalar = {
 
 export type DetailPenjualanOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quantity" | "harga" | "transaksiId" | "obatId", ExtArgs["result"]["detailPenjualan"]>
 export type DetailPenjualanInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
 }
 export type DetailPenjualanIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
 }
 export type DetailPenjualanIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>
 }
 
 export type $DetailPenjualanPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DetailPenjualan"
   objects: {
-    transaksi: Prisma.$TransaksiPenjualanPayload<ExtArgs>
     obat: Prisma.$ObatPayload<ExtArgs>
+    transaksi: Prisma.$TransaksiPenjualanPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1060,8 +1060,8 @@ readonly fields: DetailPenjualanFieldRefs;
  */
 export interface Prisma__DetailPenjualanClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  transaksi<T extends Prisma.TransaksiPenjualanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>>): Prisma.Prisma__TransaksiPenjualanClient<runtime.Types.Result.GetResult<Prisma.$TransaksiPenjualanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   obat<T extends Prisma.ObatDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ObatDefaultArgs<ExtArgs>>): Prisma.Prisma__ObatClient<runtime.Types.Result.GetResult<Prisma.$ObatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  transaksi<T extends Prisma.TransaksiPenjualanDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransaksiPenjualanDefaultArgs<ExtArgs>>): Prisma.Prisma__TransaksiPenjualanClient<runtime.Types.Result.GetResult<Prisma.$TransaksiPenjualanPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

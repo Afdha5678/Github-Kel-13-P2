@@ -190,8 +190,8 @@ export type TransaksiPembelianWhereInput = {
   supplierId?: Prisma.StringFilter<"TransaksiPembelian"> | string
   createdAt?: Prisma.DateTimeFilter<"TransaksiPembelian"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TransaksiPembelian"> | Date | string
-  supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>
   details?: Prisma.DetailPembelianListRelationFilter
+  supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>
 }
 
 export type TransaksiPembelianOrderByWithRelationInput = {
@@ -201,8 +201,8 @@ export type TransaksiPembelianOrderByWithRelationInput = {
   supplierId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  supplier?: Prisma.SupplierOrderByWithRelationInput
   details?: Prisma.DetailPembelianOrderByRelationAggregateInput
+  supplier?: Prisma.SupplierOrderByWithRelationInput
 }
 
 export type TransaksiPembelianWhereUniqueInput = Prisma.AtLeast<{
@@ -215,8 +215,8 @@ export type TransaksiPembelianWhereUniqueInput = Prisma.AtLeast<{
   supplierId?: Prisma.StringFilter<"TransaksiPembelian"> | string
   createdAt?: Prisma.DateTimeFilter<"TransaksiPembelian"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"TransaksiPembelian"> | Date | string
-  supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>
   details?: Prisma.DetailPembelianListRelationFilter
+  supplier?: Prisma.XOR<Prisma.SupplierScalarRelationFilter, Prisma.SupplierWhereInput>
 }, "id">
 
 export type TransaksiPembelianOrderByWithAggregationInput = {
@@ -249,8 +249,8 @@ export type TransaksiPembelianCreateInput = {
   status: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  supplier: Prisma.SupplierCreateNestedOneWithoutTransaksiPembelianInput
   details?: Prisma.DetailPembelianCreateNestedManyWithoutTransaksiInput
+  supplier: Prisma.SupplierCreateNestedOneWithoutTransaksiPembelianInput
 }
 
 export type TransaksiPembelianUncheckedCreateInput = {
@@ -269,8 +269,8 @@ export type TransaksiPembelianUpdateInput = {
   status?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  supplier?: Prisma.SupplierUpdateOneRequiredWithoutTransaksiPembelianNestedInput
   details?: Prisma.DetailPembelianUpdateManyWithoutTransaksiNestedInput
+  supplier?: Prisma.SupplierUpdateOneRequiredWithoutTransaksiPembelianNestedInput
 }
 
 export type TransaksiPembelianUncheckedUpdateInput = {
@@ -587,8 +587,8 @@ export type TransaksiPembelianSelect<ExtArgs extends runtime.Types.Extensions.In
   supplierId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   details?: boolean | Prisma.TransaksiPembelian$detailsArgs<ExtArgs>
+  supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.TransaksiPembelianCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["transaksiPembelian"]>
 
@@ -623,8 +623,8 @@ export type TransaksiPembelianSelectScalar = {
 
 export type TransaksiPembelianOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "tanggal" | "status" | "supplierId" | "createdAt" | "updatedAt", ExtArgs["result"]["transaksiPembelian"]>
 export type TransaksiPembelianInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   details?: boolean | Prisma.TransaksiPembelian$detailsArgs<ExtArgs>
+  supplier?: boolean | Prisma.SupplierDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.TransaksiPembelianCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type TransaksiPembelianIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -637,8 +637,8 @@ export type TransaksiPembelianIncludeUpdateManyAndReturn<ExtArgs extends runtime
 export type $TransaksiPembelianPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "TransaksiPembelian"
   objects: {
-    supplier: Prisma.$SupplierPayload<ExtArgs>
     details: Prisma.$DetailPembelianPayload<ExtArgs>[]
+    supplier: Prisma.$SupplierPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1041,8 +1041,8 @@ readonly fields: TransaksiPembelianFieldRefs;
  */
 export interface Prisma__TransaksiPembelianClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  supplier<T extends Prisma.SupplierDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SupplierDefaultArgs<ExtArgs>>): Prisma.Prisma__SupplierClient<runtime.Types.Result.GetResult<Prisma.$SupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   details<T extends Prisma.TransaksiPembelian$detailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransaksiPembelian$detailsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DetailPembelianPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supplier<T extends Prisma.SupplierDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SupplierDefaultArgs<ExtArgs>>): Prisma.Prisma__SupplierClient<runtime.Types.Result.GetResult<Prisma.$SupplierPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

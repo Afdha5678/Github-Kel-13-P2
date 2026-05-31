@@ -220,8 +220,8 @@ export type DetailPembelianWhereInput = {
   quantityReceived?: Prisma.IntFilter<"DetailPembelian"> | number
   transaksiId?: Prisma.StringFilter<"DetailPembelian"> | string
   obatId?: Prisma.StringFilter<"DetailPembelian"> | string
-  transaksi?: Prisma.XOR<Prisma.TransaksiPembelianScalarRelationFilter, Prisma.TransaksiPembelianWhereInput>
   obat?: Prisma.XOR<Prisma.ObatScalarRelationFilter, Prisma.ObatWhereInput>
+  transaksi?: Prisma.XOR<Prisma.TransaksiPembelianScalarRelationFilter, Prisma.TransaksiPembelianWhereInput>
 }
 
 export type DetailPembelianOrderByWithRelationInput = {
@@ -230,8 +230,8 @@ export type DetailPembelianOrderByWithRelationInput = {
   quantityReceived?: Prisma.SortOrder
   transaksiId?: Prisma.SortOrder
   obatId?: Prisma.SortOrder
-  transaksi?: Prisma.TransaksiPembelianOrderByWithRelationInput
   obat?: Prisma.ObatOrderByWithRelationInput
+  transaksi?: Prisma.TransaksiPembelianOrderByWithRelationInput
 }
 
 export type DetailPembelianWhereUniqueInput = Prisma.AtLeast<{
@@ -243,8 +243,8 @@ export type DetailPembelianWhereUniqueInput = Prisma.AtLeast<{
   quantityReceived?: Prisma.IntFilter<"DetailPembelian"> | number
   transaksiId?: Prisma.StringFilter<"DetailPembelian"> | string
   obatId?: Prisma.StringFilter<"DetailPembelian"> | string
-  transaksi?: Prisma.XOR<Prisma.TransaksiPembelianScalarRelationFilter, Prisma.TransaksiPembelianWhereInput>
   obat?: Prisma.XOR<Prisma.ObatScalarRelationFilter, Prisma.ObatWhereInput>
+  transaksi?: Prisma.XOR<Prisma.TransaksiPembelianScalarRelationFilter, Prisma.TransaksiPembelianWhereInput>
 }, "id">
 
 export type DetailPembelianOrderByWithAggregationInput = {
@@ -275,8 +275,8 @@ export type DetailPembelianCreateInput = {
   id?: string
   quantityOrdered: number
   quantityReceived: number
-  transaksi: Prisma.TransaksiPembelianCreateNestedOneWithoutDetailsInput
   obat: Prisma.ObatCreateNestedOneWithoutDetailPembelianInput
+  transaksi: Prisma.TransaksiPembelianCreateNestedOneWithoutDetailsInput
 }
 
 export type DetailPembelianUncheckedCreateInput = {
@@ -291,8 +291,8 @@ export type DetailPembelianUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   quantityOrdered?: Prisma.IntFieldUpdateOperationsInput | number
   quantityReceived?: Prisma.IntFieldUpdateOperationsInput | number
-  transaksi?: Prisma.TransaksiPembelianUpdateOneRequiredWithoutDetailsNestedInput
   obat?: Prisma.ObatUpdateOneRequiredWithoutDetailPembelianNestedInput
+  transaksi?: Prisma.TransaksiPembelianUpdateOneRequiredWithoutDetailsNestedInput
 }
 
 export type DetailPembelianUncheckedUpdateInput = {
@@ -608,8 +608,8 @@ export type DetailPembelianSelect<ExtArgs extends runtime.Types.Extensions.Inter
   quantityReceived?: boolean
   transaksiId?: boolean
   obatId?: boolean
-  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["detailPembelian"]>
 
 export type DetailPembelianSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -618,8 +618,8 @@ export type DetailPembelianSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   quantityReceived?: boolean
   transaksiId?: boolean
   obatId?: boolean
-  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["detailPembelian"]>
 
 export type DetailPembelianSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -628,8 +628,8 @@ export type DetailPembelianSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   quantityReceived?: boolean
   transaksiId?: boolean
   obatId?: boolean
-  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["detailPembelian"]>
 
 export type DetailPembelianSelectScalar = {
@@ -642,23 +642,23 @@ export type DetailPembelianSelectScalar = {
 
 export type DetailPembelianOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "quantityOrdered" | "quantityReceived" | "transaksiId" | "obatId", ExtArgs["result"]["detailPembelian"]>
 export type DetailPembelianInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
 }
 export type DetailPembelianIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
 }
 export type DetailPembelianIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  transaksi?: boolean | Prisma.TransaksiPembelianDefaultArgs<ExtArgs>
 }
 
 export type $DetailPembelianPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "DetailPembelian"
   objects: {
-    transaksi: Prisma.$TransaksiPembelianPayload<ExtArgs>
     obat: Prisma.$ObatPayload<ExtArgs>
+    transaksi: Prisma.$TransaksiPembelianPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1060,8 +1060,8 @@ readonly fields: DetailPembelianFieldRefs;
  */
 export interface Prisma__DetailPembelianClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  transaksi<T extends Prisma.TransaksiPembelianDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransaksiPembelianDefaultArgs<ExtArgs>>): Prisma.Prisma__TransaksiPembelianClient<runtime.Types.Result.GetResult<Prisma.$TransaksiPembelianPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   obat<T extends Prisma.ObatDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ObatDefaultArgs<ExtArgs>>): Prisma.Prisma__ObatClient<runtime.Types.Result.GetResult<Prisma.$ObatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  transaksi<T extends Prisma.TransaksiPembelianDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TransaksiPembelianDefaultArgs<ExtArgs>>): Prisma.Prisma__TransaksiPembelianClient<runtime.Types.Result.GetResult<Prisma.$TransaksiPembelianPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.

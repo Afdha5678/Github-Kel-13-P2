@@ -1,6 +1,18 @@
+-- Install dependencies --
+npm install
+
 -- Command untuk membuat migrasi dan database --
 npx prisma migrate dev --name init_master_data
 
 -- Command untuk membuat database --
 npx prisma db push
 npx prisma db pull
+
+-- Command untuk generate --
+npx prisma generate
+
+-- Command untuk membuat seed --
+npx prisma db seed
+
+-- Command untuk membuat server --
+npm run dev

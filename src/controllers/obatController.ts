@@ -12,13 +12,17 @@ export const createObat = async (req: Request, res: Response) => {
     try {
         // Mengambil payload dari body request frontend
         const obatData = req.body;
+        
+        if (req.file) {
+            obatData.image = `/uploads/${req.file.filename}`;
+        }
 
         const newObat = await obatService.createObatService(obatData);
 
         // 201 Created: Standar HTTP untuk resource yang berhasil dibuat
         res.status(201).json({
             success: true,
-            message: 'Data Obat dan Stok awal berhasil ditambahkan',
+            message: 'Data Obat berhasil ditambahkan',
             data: newObat
         });
     } catch (error) {
@@ -33,7 +37,8 @@ export const createObat = async (req: Request, res: Response) => {
 // 2. READ: Ambil Semua Data Obat
 export const getAllObat = async (req: Request, res: Response) => {
     try {
-        const listObat = await obatService.getAllObatService();
+        const search = req.query.search as string | undefined;
+        const listObat = await obatService.getAllObatService(search);
 
         // 200 OK: Standar HTTP untuk request sukses
         res.status(200).json({
@@ -81,6 +86,10 @@ export const updateObat = async (req: Request, res: Response) => {
     try {
         const id = req.params.id as string;
         const updateData = req.body;
+
+        if (req.file) {
+            updateData.image = `/uploads/${req.file.filename}`;
+        }
 
         const updatedObat = await obatService.updateObatService(id, updateData);
 

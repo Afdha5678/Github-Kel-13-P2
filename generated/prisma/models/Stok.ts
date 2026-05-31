@@ -37,28 +37,28 @@ export type StokSumAggregateOutputType = {
 export type StokMinAggregateOutputType = {
   id: string | null
   jumlah: number | null
-  tanggalKedaluwarsa: Date | null
   obatId: string | null
-  createdAt: Date | null
   updatedAt: Date | null
+  createdAt: Date | null
+  tanggalKedaluwarsa: Date | null
 }
 
 export type StokMaxAggregateOutputType = {
   id: string | null
   jumlah: number | null
-  tanggalKedaluwarsa: Date | null
   obatId: string | null
-  createdAt: Date | null
   updatedAt: Date | null
+  createdAt: Date | null
+  tanggalKedaluwarsa: Date | null
 }
 
 export type StokCountAggregateOutputType = {
   id: number
   jumlah: number
-  tanggalKedaluwarsa: number
   obatId: number
-  createdAt: number
   updatedAt: number
+  createdAt: number
+  tanggalKedaluwarsa: number
   _all: number
 }
 
@@ -74,28 +74,28 @@ export type StokSumAggregateInputType = {
 export type StokMinAggregateInputType = {
   id?: true
   jumlah?: true
-  tanggalKedaluwarsa?: true
   obatId?: true
-  createdAt?: true
   updatedAt?: true
+  createdAt?: true
+  tanggalKedaluwarsa?: true
 }
 
 export type StokMaxAggregateInputType = {
   id?: true
   jumlah?: true
-  tanggalKedaluwarsa?: true
   obatId?: true
-  createdAt?: true
   updatedAt?: true
+  createdAt?: true
+  tanggalKedaluwarsa?: true
 }
 
 export type StokCountAggregateInputType = {
   id?: true
   jumlah?: true
-  tanggalKedaluwarsa?: true
   obatId?: true
-  createdAt?: true
   updatedAt?: true
+  createdAt?: true
+  tanggalKedaluwarsa?: true
   _all?: true
 }
 
@@ -188,10 +188,10 @@ export type StokGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type StokGroupByOutputType = {
   id: string
   jumlah: number
-  tanggalKedaluwarsa: Date
   obatId: string
-  createdAt: Date
   updatedAt: Date
+  createdAt: Date
+  tanggalKedaluwarsa: Date
   _count: StokCountAggregateOutputType | null
   _avg: StokAvgAggregateOutputType | null
   _sum: StokSumAggregateOutputType | null
@@ -220,23 +220,23 @@ export type StokWhereInput = {
   NOT?: Prisma.StokWhereInput | Prisma.StokWhereInput[]
   id?: Prisma.StringFilter<"Stok"> | string
   jumlah?: Prisma.IntFilter<"Stok"> | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFilter<"Stok"> | Date | string
   obatId?: Prisma.StringFilter<"Stok"> | string
-  createdAt?: Prisma.DateTimeFilter<"Stok"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Stok"> | Date | string
-  obat?: Prisma.XOR<Prisma.ObatScalarRelationFilter, Prisma.ObatWhereInput>
+  createdAt?: Prisma.DateTimeFilter<"Stok"> | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFilter<"Stok"> | Date | string
   stockMovements?: Prisma.StockMovementListRelationFilter
+  obat?: Prisma.XOR<Prisma.ObatScalarRelationFilter, Prisma.ObatWhereInput>
 }
 
 export type StokOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   jumlah?: Prisma.SortOrder
-  tanggalKedaluwarsa?: Prisma.SortOrder
   obatId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  obat?: Prisma.ObatOrderByWithRelationInput
+  createdAt?: Prisma.SortOrder
+  tanggalKedaluwarsa?: Prisma.SortOrder
   stockMovements?: Prisma.StockMovementOrderByRelationAggregateInput
+  obat?: Prisma.ObatOrderByWithRelationInput
 }
 
 export type StokWhereUniqueInput = Prisma.AtLeast<{
@@ -245,21 +245,21 @@ export type StokWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.StokWhereInput[]
   NOT?: Prisma.StokWhereInput | Prisma.StokWhereInput[]
   jumlah?: Prisma.IntFilter<"Stok"> | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFilter<"Stok"> | Date | string
   obatId?: Prisma.StringFilter<"Stok"> | string
-  createdAt?: Prisma.DateTimeFilter<"Stok"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Stok"> | Date | string
-  obat?: Prisma.XOR<Prisma.ObatScalarRelationFilter, Prisma.ObatWhereInput>
+  createdAt?: Prisma.DateTimeFilter<"Stok"> | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFilter<"Stok"> | Date | string
   stockMovements?: Prisma.StockMovementListRelationFilter
+  obat?: Prisma.XOR<Prisma.ObatScalarRelationFilter, Prisma.ObatWhereInput>
 }, "id">
 
 export type StokOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   jumlah?: Prisma.SortOrder
-  tanggalKedaluwarsa?: Prisma.SortOrder
   obatId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  tanggalKedaluwarsa?: Prisma.SortOrder
   _count?: Prisma.StokCountOrderByAggregateInput
   _avg?: Prisma.StokAvgOrderByAggregateInput
   _max?: Prisma.StokMaxOrderByAggregateInput
@@ -273,76 +273,76 @@ export type StokScalarWhereWithAggregatesInput = {
   NOT?: Prisma.StokScalarWhereWithAggregatesInput | Prisma.StokScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Stok"> | string
   jumlah?: Prisma.IntWithAggregatesFilter<"Stok"> | number
-  tanggalKedaluwarsa?: Prisma.DateTimeWithAggregatesFilter<"Stok"> | Date | string
   obatId?: Prisma.StringWithAggregatesFilter<"Stok"> | string
-  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Stok"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Stok"> | Date | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Stok"> | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeWithAggregatesFilter<"Stok"> | Date | string
 }
 
 export type StokCreateInput = {
   id?: string
   jumlah?: number
-  tanggalKedaluwarsa: Date | string
-  createdAt?: Date | string
   updatedAt?: Date | string
-  obat: Prisma.ObatCreateNestedOneWithoutStokInput
+  createdAt?: Date | string
+  tanggalKedaluwarsa: Date | string
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutStokInput
+  obat: Prisma.ObatCreateNestedOneWithoutStokInput
 }
 
 export type StokUncheckedCreateInput = {
   id?: string
   jumlah?: number
-  tanggalKedaluwarsa: Date | string
   obatId: string
-  createdAt?: Date | string
   updatedAt?: Date | string
+  createdAt?: Date | string
+  tanggalKedaluwarsa: Date | string
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutStokInput
 }
 
 export type StokUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jumlah?: Prisma.IntFieldUpdateOperationsInput | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  obat?: Prisma.ObatUpdateOneRequiredWithoutStokNestedInput
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stockMovements?: Prisma.StockMovementUpdateManyWithoutStokNestedInput
+  obat?: Prisma.ObatUpdateOneRequiredWithoutStokNestedInput
 }
 
 export type StokUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jumlah?: Prisma.IntFieldUpdateOperationsInput | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   obatId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutStokNestedInput
 }
 
 export type StokCreateManyInput = {
   id?: string
   jumlah?: number
-  tanggalKedaluwarsa: Date | string
   obatId: string
-  createdAt?: Date | string
   updatedAt?: Date | string
+  createdAt?: Date | string
+  tanggalKedaluwarsa: Date | string
 }
 
 export type StokUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jumlah?: Prisma.IntFieldUpdateOperationsInput | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StokUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jumlah?: Prisma.IntFieldUpdateOperationsInput | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   obatId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StokListRelationFilter = {
@@ -358,10 +358,10 @@ export type StokOrderByRelationAggregateInput = {
 export type StokCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   jumlah?: Prisma.SortOrder
-  tanggalKedaluwarsa?: Prisma.SortOrder
   obatId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  tanggalKedaluwarsa?: Prisma.SortOrder
 }
 
 export type StokAvgOrderByAggregateInput = {
@@ -371,19 +371,19 @@ export type StokAvgOrderByAggregateInput = {
 export type StokMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   jumlah?: Prisma.SortOrder
-  tanggalKedaluwarsa?: Prisma.SortOrder
   obatId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  tanggalKedaluwarsa?: Prisma.SortOrder
 }
 
 export type StokMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   jumlah?: Prisma.SortOrder
-  tanggalKedaluwarsa?: Prisma.SortOrder
   obatId?: Prisma.SortOrder
-  createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  tanggalKedaluwarsa?: Prisma.SortOrder
 }
 
 export type StokSumOrderByAggregateInput = {
@@ -454,18 +454,18 @@ export type StokUpdateOneRequiredWithoutStockMovementsNestedInput = {
 export type StokCreateWithoutObatInput = {
   id?: string
   jumlah?: number
-  tanggalKedaluwarsa: Date | string
-  createdAt?: Date | string
   updatedAt?: Date | string
+  createdAt?: Date | string
+  tanggalKedaluwarsa: Date | string
   stockMovements?: Prisma.StockMovementCreateNestedManyWithoutStokInput
 }
 
 export type StokUncheckedCreateWithoutObatInput = {
   id?: string
   jumlah?: number
-  tanggalKedaluwarsa: Date | string
-  createdAt?: Date | string
   updatedAt?: Date | string
+  createdAt?: Date | string
+  tanggalKedaluwarsa: Date | string
   stockMovements?: Prisma.StockMovementUncheckedCreateNestedManyWithoutStokInput
 }
 
@@ -501,28 +501,28 @@ export type StokScalarWhereInput = {
   NOT?: Prisma.StokScalarWhereInput | Prisma.StokScalarWhereInput[]
   id?: Prisma.StringFilter<"Stok"> | string
   jumlah?: Prisma.IntFilter<"Stok"> | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFilter<"Stok"> | Date | string
   obatId?: Prisma.StringFilter<"Stok"> | string
-  createdAt?: Prisma.DateTimeFilter<"Stok"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Stok"> | Date | string
+  createdAt?: Prisma.DateTimeFilter<"Stok"> | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFilter<"Stok"> | Date | string
 }
 
 export type StokCreateWithoutStockMovementsInput = {
   id?: string
   jumlah?: number
-  tanggalKedaluwarsa: Date | string
-  createdAt?: Date | string
   updatedAt?: Date | string
+  createdAt?: Date | string
+  tanggalKedaluwarsa: Date | string
   obat: Prisma.ObatCreateNestedOneWithoutStokInput
 }
 
 export type StokUncheckedCreateWithoutStockMovementsInput = {
   id?: string
   jumlah?: number
-  tanggalKedaluwarsa: Date | string
   obatId: string
-  createdAt?: Date | string
   updatedAt?: Date | string
+  createdAt?: Date | string
+  tanggalKedaluwarsa: Date | string
 }
 
 export type StokCreateOrConnectWithoutStockMovementsInput = {
@@ -544,53 +544,53 @@ export type StokUpdateToOneWithWhereWithoutStockMovementsInput = {
 export type StokUpdateWithoutStockMovementsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jumlah?: Prisma.IntFieldUpdateOperationsInput | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   obat?: Prisma.ObatUpdateOneRequiredWithoutStokNestedInput
 }
 
 export type StokUncheckedUpdateWithoutStockMovementsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jumlah?: Prisma.IntFieldUpdateOperationsInput | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   obatId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StokCreateManyObatInput = {
   id?: string
   jumlah?: number
-  tanggalKedaluwarsa: Date | string
-  createdAt?: Date | string
   updatedAt?: Date | string
+  createdAt?: Date | string
+  tanggalKedaluwarsa: Date | string
 }
 
 export type StokUpdateWithoutObatInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jumlah?: Prisma.IntFieldUpdateOperationsInput | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stockMovements?: Prisma.StockMovementUpdateManyWithoutStokNestedInput
 }
 
 export type StokUncheckedUpdateWithoutObatInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jumlah?: Prisma.IntFieldUpdateOperationsInput | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stockMovements?: Prisma.StockMovementUncheckedUpdateManyWithoutStokNestedInput
 }
 
 export type StokUncheckedUpdateManyWithoutObatInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   jumlah?: Prisma.IntFieldUpdateOperationsInput | number
-  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  tanggalKedaluwarsa?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -627,48 +627,48 @@ export type StokCountOutputTypeCountStockMovementsArgs<ExtArgs extends runtime.T
 export type StokSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   jumlah?: boolean
-  tanggalKedaluwarsa?: boolean
   obatId?: boolean
-  createdAt?: boolean
   updatedAt?: boolean
-  obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
+  createdAt?: boolean
+  tanggalKedaluwarsa?: boolean
   stockMovements?: boolean | Prisma.Stok$stockMovementsArgs<ExtArgs>
+  obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.StokCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["stok"]>
 
 export type StokSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   jumlah?: boolean
-  tanggalKedaluwarsa?: boolean
   obatId?: boolean
-  createdAt?: boolean
   updatedAt?: boolean
+  createdAt?: boolean
+  tanggalKedaluwarsa?: boolean
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["stok"]>
 
 export type StokSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   jumlah?: boolean
-  tanggalKedaluwarsa?: boolean
   obatId?: boolean
-  createdAt?: boolean
   updatedAt?: boolean
+  createdAt?: boolean
+  tanggalKedaluwarsa?: boolean
   obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["stok"]>
 
 export type StokSelectScalar = {
   id?: boolean
   jumlah?: boolean
-  tanggalKedaluwarsa?: boolean
   obatId?: boolean
-  createdAt?: boolean
   updatedAt?: boolean
+  createdAt?: boolean
+  tanggalKedaluwarsa?: boolean
 }
 
-export type StokOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jumlah" | "tanggalKedaluwarsa" | "obatId" | "createdAt" | "updatedAt", ExtArgs["result"]["stok"]>
+export type StokOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "jumlah" | "obatId" | "updatedAt" | "createdAt" | "tanggalKedaluwarsa", ExtArgs["result"]["stok"]>
 export type StokInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
   stockMovements?: boolean | Prisma.Stok$stockMovementsArgs<ExtArgs>
+  obat?: boolean | Prisma.ObatDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.StokCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type StokIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -681,16 +681,16 @@ export type StokIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $StokPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Stok"
   objects: {
-    obat: Prisma.$ObatPayload<ExtArgs>
     stockMovements: Prisma.$StockMovementPayload<ExtArgs>[]
+    obat: Prisma.$ObatPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     jumlah: number
-    tanggalKedaluwarsa: Date
     obatId: string
-    createdAt: Date
     updatedAt: Date
+    createdAt: Date
+    tanggalKedaluwarsa: Date
   }, ExtArgs["result"]["stok"]>
   composites: {}
 }
@@ -1085,8 +1085,8 @@ readonly fields: StokFieldRefs;
  */
 export interface Prisma__StokClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  obat<T extends Prisma.ObatDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ObatDefaultArgs<ExtArgs>>): Prisma.Prisma__ObatClient<runtime.Types.Result.GetResult<Prisma.$ObatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   stockMovements<T extends Prisma.Stok$stockMovementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Stok$stockMovementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockMovementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  obat<T extends Prisma.ObatDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ObatDefaultArgs<ExtArgs>>): Prisma.Prisma__ObatClient<runtime.Types.Result.GetResult<Prisma.$ObatPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1118,10 +1118,10 @@ export interface Prisma__StokClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface StokFieldRefs {
   readonly id: Prisma.FieldRef<"Stok", 'String'>
   readonly jumlah: Prisma.FieldRef<"Stok", 'Int'>
-  readonly tanggalKedaluwarsa: Prisma.FieldRef<"Stok", 'DateTime'>
   readonly obatId: Prisma.FieldRef<"Stok", 'String'>
-  readonly createdAt: Prisma.FieldRef<"Stok", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Stok", 'DateTime'>
+  readonly createdAt: Prisma.FieldRef<"Stok", 'DateTime'>
+  readonly tanggalKedaluwarsa: Prisma.FieldRef<"Stok", 'DateTime'>
 }
     
 

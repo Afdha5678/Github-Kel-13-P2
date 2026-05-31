@@ -40,6 +40,9 @@ export type ObatMinAggregateOutputType = {
   hargaJual: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  image: string | null
+  lokasiRak: string | null
+  satuan: string | null
 }
 
 export type ObatMaxAggregateOutputType = {
@@ -48,6 +51,9 @@ export type ObatMaxAggregateOutputType = {
   hargaJual: number | null
   createdAt: Date | null
   updatedAt: Date | null
+  image: string | null
+  lokasiRak: string | null
+  satuan: string | null
 }
 
 export type ObatCountAggregateOutputType = {
@@ -56,6 +62,9 @@ export type ObatCountAggregateOutputType = {
   hargaJual: number
   createdAt: number
   updatedAt: number
+  image: number
+  lokasiRak: number
+  satuan: number
   _all: number
 }
 
@@ -74,6 +83,9 @@ export type ObatMinAggregateInputType = {
   hargaJual?: true
   createdAt?: true
   updatedAt?: true
+  image?: true
+  lokasiRak?: true
+  satuan?: true
 }
 
 export type ObatMaxAggregateInputType = {
@@ -82,6 +94,9 @@ export type ObatMaxAggregateInputType = {
   hargaJual?: true
   createdAt?: true
   updatedAt?: true
+  image?: true
+  lokasiRak?: true
+  satuan?: true
 }
 
 export type ObatCountAggregateInputType = {
@@ -90,6 +105,9 @@ export type ObatCountAggregateInputType = {
   hargaJual?: true
   createdAt?: true
   updatedAt?: true
+  image?: true
+  lokasiRak?: true
+  satuan?: true
   _all?: true
 }
 
@@ -185,6 +203,9 @@ export type ObatGroupByOutputType = {
   hargaJual: number
   createdAt: Date
   updatedAt: Date
+  image: string | null
+  lokasiRak: string | null
+  satuan: string
   _count: ObatCountAggregateOutputType | null
   _avg: ObatAvgAggregateOutputType | null
   _sum: ObatSumAggregateOutputType | null
@@ -216,9 +237,12 @@ export type ObatWhereInput = {
   hargaJual?: Prisma.IntFilter<"Obat"> | number
   createdAt?: Prisma.DateTimeFilter<"Obat"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Obat"> | Date | string
-  stok?: Prisma.StokListRelationFilter
-  detailPenjualan?: Prisma.DetailPenjualanListRelationFilter
+  image?: Prisma.StringNullableFilter<"Obat"> | string | null
+  lokasiRak?: Prisma.StringNullableFilter<"Obat"> | string | null
+  satuan?: Prisma.StringFilter<"Obat"> | string
   detailPembelian?: Prisma.DetailPembelianListRelationFilter
+  detailPenjualan?: Prisma.DetailPenjualanListRelationFilter
+  stok?: Prisma.StokListRelationFilter
 }
 
 export type ObatOrderByWithRelationInput = {
@@ -227,9 +251,12 @@ export type ObatOrderByWithRelationInput = {
   hargaJual?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  stok?: Prisma.StokOrderByRelationAggregateInput
-  detailPenjualan?: Prisma.DetailPenjualanOrderByRelationAggregateInput
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
+  lokasiRak?: Prisma.SortOrderInput | Prisma.SortOrder
+  satuan?: Prisma.SortOrder
   detailPembelian?: Prisma.DetailPembelianOrderByRelationAggregateInput
+  detailPenjualan?: Prisma.DetailPenjualanOrderByRelationAggregateInput
+  stok?: Prisma.StokOrderByRelationAggregateInput
 }
 
 export type ObatWhereUniqueInput = Prisma.AtLeast<{
@@ -241,9 +268,12 @@ export type ObatWhereUniqueInput = Prisma.AtLeast<{
   hargaJual?: Prisma.IntFilter<"Obat"> | number
   createdAt?: Prisma.DateTimeFilter<"Obat"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Obat"> | Date | string
-  stok?: Prisma.StokListRelationFilter
-  detailPenjualan?: Prisma.DetailPenjualanListRelationFilter
+  image?: Prisma.StringNullableFilter<"Obat"> | string | null
+  lokasiRak?: Prisma.StringNullableFilter<"Obat"> | string | null
+  satuan?: Prisma.StringFilter<"Obat"> | string
   detailPembelian?: Prisma.DetailPembelianListRelationFilter
+  detailPenjualan?: Prisma.DetailPenjualanListRelationFilter
+  stok?: Prisma.StokListRelationFilter
 }, "id">
 
 export type ObatOrderByWithAggregationInput = {
@@ -252,6 +282,9 @@ export type ObatOrderByWithAggregationInput = {
   hargaJual?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  image?: Prisma.SortOrderInput | Prisma.SortOrder
+  lokasiRak?: Prisma.SortOrderInput | Prisma.SortOrder
+  satuan?: Prisma.SortOrder
   _count?: Prisma.ObatCountOrderByAggregateInput
   _avg?: Prisma.ObatAvgOrderByAggregateInput
   _max?: Prisma.ObatMaxOrderByAggregateInput
@@ -268,6 +301,9 @@ export type ObatScalarWhereWithAggregatesInput = {
   hargaJual?: Prisma.IntWithAggregatesFilter<"Obat"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Obat"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Obat"> | Date | string
+  image?: Prisma.StringNullableWithAggregatesFilter<"Obat"> | string | null
+  lokasiRak?: Prisma.StringNullableWithAggregatesFilter<"Obat"> | string | null
+  satuan?: Prisma.StringWithAggregatesFilter<"Obat"> | string
 }
 
 export type ObatCreateInput = {
@@ -276,9 +312,12 @@ export type ObatCreateInput = {
   hargaJual: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  stok?: Prisma.StokCreateNestedManyWithoutObatInput
-  detailPenjualan?: Prisma.DetailPenjualanCreateNestedManyWithoutObatInput
+  image?: string | null
+  lokasiRak?: string | null
+  satuan?: string
   detailPembelian?: Prisma.DetailPembelianCreateNestedManyWithoutObatInput
+  detailPenjualan?: Prisma.DetailPenjualanCreateNestedManyWithoutObatInput
+  stok?: Prisma.StokCreateNestedManyWithoutObatInput
 }
 
 export type ObatUncheckedCreateInput = {
@@ -287,9 +326,12 @@ export type ObatUncheckedCreateInput = {
   hargaJual: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  stok?: Prisma.StokUncheckedCreateNestedManyWithoutObatInput
-  detailPenjualan?: Prisma.DetailPenjualanUncheckedCreateNestedManyWithoutObatInput
+  image?: string | null
+  lokasiRak?: string | null
+  satuan?: string
   detailPembelian?: Prisma.DetailPembelianUncheckedCreateNestedManyWithoutObatInput
+  detailPenjualan?: Prisma.DetailPenjualanUncheckedCreateNestedManyWithoutObatInput
+  stok?: Prisma.StokUncheckedCreateNestedManyWithoutObatInput
 }
 
 export type ObatUpdateInput = {
@@ -298,9 +340,12 @@ export type ObatUpdateInput = {
   hargaJual?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  stok?: Prisma.StokUpdateManyWithoutObatNestedInput
-  detailPenjualan?: Prisma.DetailPenjualanUpdateManyWithoutObatNestedInput
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lokasiRak?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  satuan?: Prisma.StringFieldUpdateOperationsInput | string
   detailPembelian?: Prisma.DetailPembelianUpdateManyWithoutObatNestedInput
+  detailPenjualan?: Prisma.DetailPenjualanUpdateManyWithoutObatNestedInput
+  stok?: Prisma.StokUpdateManyWithoutObatNestedInput
 }
 
 export type ObatUncheckedUpdateInput = {
@@ -309,9 +354,12 @@ export type ObatUncheckedUpdateInput = {
   hargaJual?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  stok?: Prisma.StokUncheckedUpdateManyWithoutObatNestedInput
-  detailPenjualan?: Prisma.DetailPenjualanUncheckedUpdateManyWithoutObatNestedInput
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lokasiRak?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  satuan?: Prisma.StringFieldUpdateOperationsInput | string
   detailPembelian?: Prisma.DetailPembelianUncheckedUpdateManyWithoutObatNestedInput
+  detailPenjualan?: Prisma.DetailPenjualanUncheckedUpdateManyWithoutObatNestedInput
+  stok?: Prisma.StokUncheckedUpdateManyWithoutObatNestedInput
 }
 
 export type ObatCreateManyInput = {
@@ -320,6 +368,9 @@ export type ObatCreateManyInput = {
   hargaJual: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  image?: string | null
+  lokasiRak?: string | null
+  satuan?: string
 }
 
 export type ObatUpdateManyMutationInput = {
@@ -328,6 +379,9 @@ export type ObatUpdateManyMutationInput = {
   hargaJual?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lokasiRak?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  satuan?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ObatUncheckedUpdateManyInput = {
@@ -336,6 +390,9 @@ export type ObatUncheckedUpdateManyInput = {
   hargaJual?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lokasiRak?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  satuan?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type ObatCountOrderByAggregateInput = {
@@ -344,6 +401,9 @@ export type ObatCountOrderByAggregateInput = {
   hargaJual?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  image?: Prisma.SortOrder
+  lokasiRak?: Prisma.SortOrder
+  satuan?: Prisma.SortOrder
 }
 
 export type ObatAvgOrderByAggregateInput = {
@@ -356,6 +416,9 @@ export type ObatMaxOrderByAggregateInput = {
   hargaJual?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  image?: Prisma.SortOrder
+  lokasiRak?: Prisma.SortOrder
+  satuan?: Prisma.SortOrder
 }
 
 export type ObatMinOrderByAggregateInput = {
@@ -364,6 +427,9 @@ export type ObatMinOrderByAggregateInput = {
   hargaJual?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  image?: Prisma.SortOrder
+  lokasiRak?: Prisma.SortOrder
+  satuan?: Prisma.SortOrder
 }
 
 export type ObatSumOrderByAggregateInput = {
@@ -431,8 +497,11 @@ export type ObatCreateWithoutStokInput = {
   hargaJual: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  detailPenjualan?: Prisma.DetailPenjualanCreateNestedManyWithoutObatInput
+  image?: string | null
+  lokasiRak?: string | null
+  satuan?: string
   detailPembelian?: Prisma.DetailPembelianCreateNestedManyWithoutObatInput
+  detailPenjualan?: Prisma.DetailPenjualanCreateNestedManyWithoutObatInput
 }
 
 export type ObatUncheckedCreateWithoutStokInput = {
@@ -441,8 +510,11 @@ export type ObatUncheckedCreateWithoutStokInput = {
   hargaJual: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  detailPenjualan?: Prisma.DetailPenjualanUncheckedCreateNestedManyWithoutObatInput
+  image?: string | null
+  lokasiRak?: string | null
+  satuan?: string
   detailPembelian?: Prisma.DetailPembelianUncheckedCreateNestedManyWithoutObatInput
+  detailPenjualan?: Prisma.DetailPenjualanUncheckedCreateNestedManyWithoutObatInput
 }
 
 export type ObatCreateOrConnectWithoutStokInput = {
@@ -467,8 +539,11 @@ export type ObatUpdateWithoutStokInput = {
   hargaJual?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  detailPenjualan?: Prisma.DetailPenjualanUpdateManyWithoutObatNestedInput
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lokasiRak?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  satuan?: Prisma.StringFieldUpdateOperationsInput | string
   detailPembelian?: Prisma.DetailPembelianUpdateManyWithoutObatNestedInput
+  detailPenjualan?: Prisma.DetailPenjualanUpdateManyWithoutObatNestedInput
 }
 
 export type ObatUncheckedUpdateWithoutStokInput = {
@@ -477,8 +552,11 @@ export type ObatUncheckedUpdateWithoutStokInput = {
   hargaJual?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  detailPenjualan?: Prisma.DetailPenjualanUncheckedUpdateManyWithoutObatNestedInput
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lokasiRak?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  satuan?: Prisma.StringFieldUpdateOperationsInput | string
   detailPembelian?: Prisma.DetailPembelianUncheckedUpdateManyWithoutObatNestedInput
+  detailPenjualan?: Prisma.DetailPenjualanUncheckedUpdateManyWithoutObatNestedInput
 }
 
 export type ObatCreateWithoutDetailPenjualanInput = {
@@ -487,8 +565,11 @@ export type ObatCreateWithoutDetailPenjualanInput = {
   hargaJual: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  stok?: Prisma.StokCreateNestedManyWithoutObatInput
+  image?: string | null
+  lokasiRak?: string | null
+  satuan?: string
   detailPembelian?: Prisma.DetailPembelianCreateNestedManyWithoutObatInput
+  stok?: Prisma.StokCreateNestedManyWithoutObatInput
 }
 
 export type ObatUncheckedCreateWithoutDetailPenjualanInput = {
@@ -497,8 +578,11 @@ export type ObatUncheckedCreateWithoutDetailPenjualanInput = {
   hargaJual: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  stok?: Prisma.StokUncheckedCreateNestedManyWithoutObatInput
+  image?: string | null
+  lokasiRak?: string | null
+  satuan?: string
   detailPembelian?: Prisma.DetailPembelianUncheckedCreateNestedManyWithoutObatInput
+  stok?: Prisma.StokUncheckedCreateNestedManyWithoutObatInput
 }
 
 export type ObatCreateOrConnectWithoutDetailPenjualanInput = {
@@ -523,8 +607,11 @@ export type ObatUpdateWithoutDetailPenjualanInput = {
   hargaJual?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  stok?: Prisma.StokUpdateManyWithoutObatNestedInput
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lokasiRak?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  satuan?: Prisma.StringFieldUpdateOperationsInput | string
   detailPembelian?: Prisma.DetailPembelianUpdateManyWithoutObatNestedInput
+  stok?: Prisma.StokUpdateManyWithoutObatNestedInput
 }
 
 export type ObatUncheckedUpdateWithoutDetailPenjualanInput = {
@@ -533,8 +620,11 @@ export type ObatUncheckedUpdateWithoutDetailPenjualanInput = {
   hargaJual?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  stok?: Prisma.StokUncheckedUpdateManyWithoutObatNestedInput
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lokasiRak?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  satuan?: Prisma.StringFieldUpdateOperationsInput | string
   detailPembelian?: Prisma.DetailPembelianUncheckedUpdateManyWithoutObatNestedInput
+  stok?: Prisma.StokUncheckedUpdateManyWithoutObatNestedInput
 }
 
 export type ObatCreateWithoutDetailPembelianInput = {
@@ -543,8 +633,11 @@ export type ObatCreateWithoutDetailPembelianInput = {
   hargaJual: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  stok?: Prisma.StokCreateNestedManyWithoutObatInput
+  image?: string | null
+  lokasiRak?: string | null
+  satuan?: string
   detailPenjualan?: Prisma.DetailPenjualanCreateNestedManyWithoutObatInput
+  stok?: Prisma.StokCreateNestedManyWithoutObatInput
 }
 
 export type ObatUncheckedCreateWithoutDetailPembelianInput = {
@@ -553,8 +646,11 @@ export type ObatUncheckedCreateWithoutDetailPembelianInput = {
   hargaJual: number
   createdAt?: Date | string
   updatedAt?: Date | string
-  stok?: Prisma.StokUncheckedCreateNestedManyWithoutObatInput
+  image?: string | null
+  lokasiRak?: string | null
+  satuan?: string
   detailPenjualan?: Prisma.DetailPenjualanUncheckedCreateNestedManyWithoutObatInput
+  stok?: Prisma.StokUncheckedCreateNestedManyWithoutObatInput
 }
 
 export type ObatCreateOrConnectWithoutDetailPembelianInput = {
@@ -579,8 +675,11 @@ export type ObatUpdateWithoutDetailPembelianInput = {
   hargaJual?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  stok?: Prisma.StokUpdateManyWithoutObatNestedInput
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lokasiRak?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  satuan?: Prisma.StringFieldUpdateOperationsInput | string
   detailPenjualan?: Prisma.DetailPenjualanUpdateManyWithoutObatNestedInput
+  stok?: Prisma.StokUpdateManyWithoutObatNestedInput
 }
 
 export type ObatUncheckedUpdateWithoutDetailPembelianInput = {
@@ -589,8 +688,11 @@ export type ObatUncheckedUpdateWithoutDetailPembelianInput = {
   hargaJual?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  stok?: Prisma.StokUncheckedUpdateManyWithoutObatNestedInput
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  lokasiRak?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  satuan?: Prisma.StringFieldUpdateOperationsInput | string
   detailPenjualan?: Prisma.DetailPenjualanUncheckedUpdateManyWithoutObatNestedInput
+  stok?: Prisma.StokUncheckedUpdateManyWithoutObatNestedInput
 }
 
 
@@ -599,15 +701,15 @@ export type ObatUncheckedUpdateWithoutDetailPembelianInput = {
  */
 
 export type ObatCountOutputType = {
-  stok: number
-  detailPenjualan: number
   detailPembelian: number
+  detailPenjualan: number
+  stok: number
 }
 
 export type ObatCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  stok?: boolean | ObatCountOutputTypeCountStokArgs
-  detailPenjualan?: boolean | ObatCountOutputTypeCountDetailPenjualanArgs
   detailPembelian?: boolean | ObatCountOutputTypeCountDetailPembelianArgs
+  detailPenjualan?: boolean | ObatCountOutputTypeCountDetailPenjualanArgs
+  stok?: boolean | ObatCountOutputTypeCountStokArgs
 }
 
 /**
@@ -623,8 +725,8 @@ export type ObatCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
 /**
  * ObatCountOutputType without action
  */
-export type ObatCountOutputTypeCountStokArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StokWhereInput
+export type ObatCountOutputTypeCountDetailPembelianArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DetailPembelianWhereInput
 }
 
 /**
@@ -637,8 +739,8 @@ export type ObatCountOutputTypeCountDetailPenjualanArgs<ExtArgs extends runtime.
 /**
  * ObatCountOutputType without action
  */
-export type ObatCountOutputTypeCountDetailPembelianArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.DetailPembelianWhereInput
+export type ObatCountOutputTypeCountStokArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.StokWhereInput
 }
 
 
@@ -648,9 +750,12 @@ export type ObatSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   hargaJual?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  stok?: boolean | Prisma.Obat$stokArgs<ExtArgs>
-  detailPenjualan?: boolean | Prisma.Obat$detailPenjualanArgs<ExtArgs>
+  image?: boolean
+  lokasiRak?: boolean
+  satuan?: boolean
   detailPembelian?: boolean | Prisma.Obat$detailPembelianArgs<ExtArgs>
+  detailPenjualan?: boolean | Prisma.Obat$detailPenjualanArgs<ExtArgs>
+  stok?: boolean | Prisma.Obat$stokArgs<ExtArgs>
   _count?: boolean | Prisma.ObatCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["obat"]>
 
@@ -660,6 +765,9 @@ export type ObatSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   hargaJual?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  image?: boolean
+  lokasiRak?: boolean
+  satuan?: boolean
 }, ExtArgs["result"]["obat"]>
 
 export type ObatSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -668,6 +776,9 @@ export type ObatSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   hargaJual?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  image?: boolean
+  lokasiRak?: boolean
+  satuan?: boolean
 }, ExtArgs["result"]["obat"]>
 
 export type ObatSelectScalar = {
@@ -676,13 +787,16 @@ export type ObatSelectScalar = {
   hargaJual?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  image?: boolean
+  lokasiRak?: boolean
+  satuan?: boolean
 }
 
-export type ObatOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "hargaJual" | "createdAt" | "updatedAt", ExtArgs["result"]["obat"]>
+export type ObatOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "hargaJual" | "createdAt" | "updatedAt" | "image" | "lokasiRak" | "satuan", ExtArgs["result"]["obat"]>
 export type ObatInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  stok?: boolean | Prisma.Obat$stokArgs<ExtArgs>
-  detailPenjualan?: boolean | Prisma.Obat$detailPenjualanArgs<ExtArgs>
   detailPembelian?: boolean | Prisma.Obat$detailPembelianArgs<ExtArgs>
+  detailPenjualan?: boolean | Prisma.Obat$detailPenjualanArgs<ExtArgs>
+  stok?: boolean | Prisma.Obat$stokArgs<ExtArgs>
   _count?: boolean | Prisma.ObatCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ObatIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -691,9 +805,9 @@ export type ObatIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $ObatPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Obat"
   objects: {
-    stok: Prisma.$StokPayload<ExtArgs>[]
-    detailPenjualan: Prisma.$DetailPenjualanPayload<ExtArgs>[]
     detailPembelian: Prisma.$DetailPembelianPayload<ExtArgs>[]
+    detailPenjualan: Prisma.$DetailPenjualanPayload<ExtArgs>[]
+    stok: Prisma.$StokPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -701,6 +815,9 @@ export type $ObatPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     hargaJual: number
     createdAt: Date
     updatedAt: Date
+    image: string | null
+    lokasiRak: string | null
+    satuan: string
   }, ExtArgs["result"]["obat"]>
   composites: {}
 }
@@ -1095,9 +1212,9 @@ readonly fields: ObatFieldRefs;
  */
 export interface Prisma__ObatClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  stok<T extends Prisma.Obat$stokArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Obat$stokArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StokPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  detailPenjualan<T extends Prisma.Obat$detailPenjualanArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Obat$detailPenjualanArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DetailPenjualanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   detailPembelian<T extends Prisma.Obat$detailPembelianArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Obat$detailPembelianArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DetailPembelianPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  detailPenjualan<T extends Prisma.Obat$detailPenjualanArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Obat$detailPenjualanArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DetailPenjualanPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  stok<T extends Prisma.Obat$stokArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Obat$stokArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StokPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1132,6 +1249,9 @@ export interface ObatFieldRefs {
   readonly hargaJual: Prisma.FieldRef<"Obat", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Obat", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Obat", 'DateTime'>
+  readonly image: Prisma.FieldRef<"Obat", 'String'>
+  readonly lokasiRak: Prisma.FieldRef<"Obat", 'String'>
+  readonly satuan: Prisma.FieldRef<"Obat", 'String'>
 }
     
 
@@ -1525,27 +1645,27 @@ export type ObatDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
 }
 
 /**
- * Obat.stok
+ * Obat.detailPembelian
  */
-export type Obat$stokArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Obat$detailPembelianArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Stok
+   * Select specific fields to fetch from the DetailPembelian
    */
-  select?: Prisma.StokSelect<ExtArgs> | null
+  select?: Prisma.DetailPembelianSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Stok
+   * Omit specific fields from the DetailPembelian
    */
-  omit?: Prisma.StokOmit<ExtArgs> | null
+  omit?: Prisma.DetailPembelianOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.StokInclude<ExtArgs> | null
-  where?: Prisma.StokWhereInput
-  orderBy?: Prisma.StokOrderByWithRelationInput | Prisma.StokOrderByWithRelationInput[]
-  cursor?: Prisma.StokWhereUniqueInput
+  include?: Prisma.DetailPembelianInclude<ExtArgs> | null
+  where?: Prisma.DetailPembelianWhereInput
+  orderBy?: Prisma.DetailPembelianOrderByWithRelationInput | Prisma.DetailPembelianOrderByWithRelationInput[]
+  cursor?: Prisma.DetailPembelianWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.StokScalarFieldEnum | Prisma.StokScalarFieldEnum[]
+  distinct?: Prisma.DetailPembelianScalarFieldEnum | Prisma.DetailPembelianScalarFieldEnum[]
 }
 
 /**
@@ -1573,27 +1693,27 @@ export type Obat$detailPenjualanArgs<ExtArgs extends runtime.Types.Extensions.In
 }
 
 /**
- * Obat.detailPembelian
+ * Obat.stok
  */
-export type Obat$detailPembelianArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type Obat$stokArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the DetailPembelian
+   * Select specific fields to fetch from the Stok
    */
-  select?: Prisma.DetailPembelianSelect<ExtArgs> | null
+  select?: Prisma.StokSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the DetailPembelian
+   * Omit specific fields from the Stok
    */
-  omit?: Prisma.DetailPembelianOmit<ExtArgs> | null
+  omit?: Prisma.StokOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.DetailPembelianInclude<ExtArgs> | null
-  where?: Prisma.DetailPembelianWhereInput
-  orderBy?: Prisma.DetailPembelianOrderByWithRelationInput | Prisma.DetailPembelianOrderByWithRelationInput[]
-  cursor?: Prisma.DetailPembelianWhereUniqueInput
+  include?: Prisma.StokInclude<ExtArgs> | null
+  where?: Prisma.StokWhereInput
+  orderBy?: Prisma.StokOrderByWithRelationInput | Prisma.StokOrderByWithRelationInput[]
+  cursor?: Prisma.StokWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.DetailPembelianScalarFieldEnum | Prisma.DetailPembelianScalarFieldEnum[]
+  distinct?: Prisma.StokScalarFieldEnum | Prisma.StokScalarFieldEnum[]
 }
 
 /**

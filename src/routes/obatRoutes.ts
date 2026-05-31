@@ -4,12 +4,14 @@ import { authenticateToken } from '@/middlewares/authMiddleware'
 import { formRequest } from '@/middlewares/formRequest'
 import { StoreObatRequest } from '@/requests/obat/StoreObatRequest'
 import { UpdateObatRequest } from '@/requests/obat/UpdateObatRequest'
+import { upload } from '@/middlewares/uploadMiddleware'
 
 const router = Router()
 
 router.post(
     '/',
     authenticateToken,
+    upload.single('image'),
     formRequest(StoreObatRequest),
     obatController.createObat
 )
@@ -35,6 +37,7 @@ router.get(
 router.put(
     '/:id',
     authenticateToken,
+    upload.single('image'),
     formRequest(UpdateObatRequest),
     obatController.updateObat
 )

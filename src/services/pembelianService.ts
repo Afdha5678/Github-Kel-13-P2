@@ -25,6 +25,7 @@ export const receivePembelianService = async (transaksiId: string, data: any) =>
         }
 
         // Update kuantitas yang diterima
+        const createdBatches = [];
         for (const item of data.details) {
             const detail = await tx.detailPembelian.update({
                 where: { id: item.detailId },
@@ -42,8 +43,11 @@ export const receivePembelianService = async (transaksiId: string, data: any) =>
                         jumlah: item.quantityReceived,
                         tanggalKedaluwarsa: new Date(item.tanggalKedaluwarsa),
                         obatId: detail.obatId
-                    }
+                    },
+                    include: { obat: true }
                 });
+                
+                createdBatches.push(stok);
 
                 await tx.stockMovement.create({
                     data: {
@@ -56,17 +60,99 @@ export const receivePembelianService = async (transaksiId: string, data: any) =>
         }
 
         // Update status transaksi
-        return await tx.transaksiPembelian.update({
+        const updatedTransaksi = await tx.transaksiPembelian.update({
             where: { id: transaksiId },
             data: { status: 'COMPLETED' },
             include: { details: true }
         });
+        
+        return {
+            transaksi: updatedTransaksi,
+            batches: createdBatches
+        };
     });
 };
 
-export const getAllPembelianService = async () => {
+export const getAllPembelianService = async (search?: string) => {
     return await prisma.transaksiPembelian.findMany({
-        include: { details: true, supplier: true },
+        where: search ? {
+            id: {
+                contains: search,
+                mode: 'insensitive'
+            }
+        } : undefined,
+        include: { 
+            details: {
+                include: { obat: true }
+            },
+            supplier: true
+        },
         orderBy: { createdAt: 'desc' }
+    });
+};
+
+export const getPembelianByIdService = async (id: string) => {
+    const transaksi = await prisma.transaksiPembelian.findUnique({
+        where: { id },
+        include: { 
+            details: {
+                include: { obat: true }
+            },
+            supplier: true
+        }
+    });
+
+    if (!transaksi) {
+        throw new Error("Data transaksi pembelian tidak ditemukan");
+    }
+
+    return transaksi;
+};
+
+export const deletePembelianService = async (id: string) => {
+    return await prisma.$transaction(async (tx) => {
+        const transaksi = await tx.transaksiPembelian.findUnique({
+            where: { id },
+            include: { details: true }
+        });
+
+        if (!transaksi) {
+            throw new Error("Transaksi pembelian tidak ditemukan");
+        }
+
+        // Jika transaksi sudah COMPLETED, kita harus kurangi stok yang pernah masuk
+        if (transaksi.status === 'COMPLETED') {
+            for (const detail of transaksi.details) {
+                if (detail.quantityReceived > 0) {
+                    // Cari stok yang masuk karena transaksi ini
+                    // Pendekatan sederhana: kurangi stok di obat terkait
+                    // Ideally we should track exactly which Stok id was created, but lacking that, we find latest Stok
+                    const stok = await tx.stok.findFirst({
+                        where: { obatId: detail.obatId },
+                        orderBy: { createdAt: 'desc' }
+                    });
+
+                    if (stok) {
+                        const reduceAmount = Math.min(stok.jumlah, detail.quantityReceived);
+                        await tx.stok.update({
+                            where: { id: stok.id },
+                            data: { jumlah: { decrement: reduceAmount } }
+                        });
+
+                        await tx.stockMovement.create({
+                            data: {
+                                type: 'ADJUSTMENT',
+                                quantity: reduceAmount, // we don't strictly record negative in quantity for movement in schema typically, but depends on logic. Just record quantity.
+                                stokId: stok.id
+                            }
+                        });
+                    }
+                }
+            }
+        }
+
+        return await tx.transaksiPembelian.delete({
+            where: { id }
+        });
     });
 };

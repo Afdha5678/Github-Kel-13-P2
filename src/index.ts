@@ -3,12 +3,16 @@ import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import 'dotenv/config'; // Memuat variabel dari file .env secara otomatis
 
+process.env.TZ = 'Asia/Jakarta';
+
 // Import Peta Jalur (Routes)
 import obatRoutes from '@/routes/obatRoutes';
 import authRoutes from '@/routes/authRoutes';
 import supplierRoutes from '@/routes/supplierRoutes';
 import penjualanRoutes from '@/routes/penjualanRoutes';
 import pembelianRoutes from '@/routes/pembelianRoutes';
+import dashboardRoutes from '@/routes/dashboardRoutes';
+import userRoutes from '@/routes/userRoutes';
 
 const app = express();
 
@@ -22,8 +26,13 @@ app.use(cors());
 // Wajib: Mengizinkan Express membaca payload berformat JSON dari req.body
 app.use(express.json());
 
+import path from 'path';
+
 // Opsional: Mengizinkan Express membaca data form-urlencoded standar
 app.use(express.urlencoded({ extended: true }));
+
+// Sajikan folder public secara statis agar gambar bisa diakses (contoh: /uploads/nama_file.jpg)
+app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 
 
 /**
@@ -40,9 +49,11 @@ app.get('/api/health', (req: Request, res: Response) => {
 
 app.use('/api/obat', obatRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/supplier', supplierRoutes);
 app.use('/api/penjualan', penjualanRoutes);
 app.use('/api/pembelian', pembelianRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 
 /**

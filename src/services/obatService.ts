@@ -1,14 +1,22 @@
 import { prisma } from "@/lib/prisma";
+import fs from 'fs';
+import path from 'path';
 
 // --- DATA TRANSFER OBJECTS (DTO) ---
 export interface CreateObatDTO {
     nama: string;
     hargaJual: number;
+    image?: string;
+    satuan?: string;
+    lokasiRak?: string;
 }
 
 export interface UpdateObatDTO {
     nama?: string;
     hargaJual?: number;
+    image?: string;
+    satuan?: string;
+    lokasiRak?: string;
 }
 
 // --- BUSINESS LOGIC LAYER (SERVICES) ---
@@ -19,24 +27,44 @@ export const createObatService = async (data: CreateObatDTO) => {
         data: {
             nama: data.nama,
             hargaJual: data.hargaJual,
+            image: data.image,
+            satuan: data.satuan || "Pcs",
+            lokasiRak: data.lokasiRak || null
         },
         include: { stok: true }
     });
 };
 
 // 2. READ: Ambil Semua Data Obat
-export const getAllObatService = async () => {
+export const getAllObatService = async (search?: string) => {
     const obats = await prisma.obat.findMany({
+        where: search ? {
+            nama: {
+                contains: search,
+                mode: 'insensitive'
+            }
+        } : undefined,
         include: { stok: true },
         orderBy: { createdAt: 'desc' } 
     });
 
-    // Kalkulasi total stok dari semua stok yang aktif
+    const thirtyDaysFromNow = new Date();
+    thirtyDaysFromNow.setDate(thirtyDaysFromNow.getDate() + 30);
+    const now = new Date();
+
+    // Kalkulasi total stok dari semua stok yang aktif (tidak kedaluwarsa)
     return obats.map(obat => {
-        const totalStok = obat.stok.reduce((sum, item) => sum + item.jumlah, 0);
+        // Hanya hitung stok yang belum kedaluwarsa
+        const activeStok = obat.stok.filter(item => item.tanggalKedaluwarsa > now);
+        const totalStok = activeStok.reduce((sum, item) => sum + item.jumlah, 0);
+        const hasExpiringStock = activeStok.some(item => 
+            item.jumlah > 0 && item.tanggalKedaluwarsa <= thirtyDaysFromNow
+        );
         return {
             ...obat,
-            totalStok
+            stok: activeStok, // Hanya stok aktif yang dikembalikan
+            totalStok,
+            hasExpiringStock
         };
     });
 };
@@ -58,6 +86,21 @@ export const getObatByIdService = async (id: string) => {
 
 // 4. UPDATE: Perbarui Data Obat
 export const updateObatService = async (id: string, data: UpdateObatDTO) => {
+    // Jika ada gambar baru yang diunggah, kita perlu menghapus gambar lama
+    if (data.image) {
+        const oldObat = await prisma.obat.findUnique({ where: { id } });
+        if (oldObat && oldObat.image && oldObat.image !== data.image) {
+            try {
+                const oldImagePath = path.join(process.cwd(), 'public', oldObat.image);
+                if (fs.existsSync(oldImagePath)) {
+                    fs.unlinkSync(oldImagePath);
+                }
+            } catch (error) {
+                console.error('Failed to delete old image file:', error);
+            }
+        }
+    }
+
     return await prisma.obat.update({
         where: { id },
         data: {
@@ -69,6 +112,24 @@ export const updateObatService = async (id: string, data: UpdateObatDTO) => {
 
 // 5. DELETE: Hapus Data Obat
 export const deleteObatService = async (id: string) => {
+    // Cari data obat untuk mendapatkan path gambar
+    const obat = await prisma.obat.findUnique({
+        where: { id }
+    });
+
+    if (obat && obat.image) {
+        try {
+            // obat.image is formatted like "/uploads/filename.jpg"
+            // We need to resolve it to "public/uploads/filename.jpg"
+            const imagePath = path.join(process.cwd(), 'public', obat.image);
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        } catch (error) {
+            console.error('Failed to delete image file:', error);
+        }
+    }
+
     // onCascade Delete will remove related Stok
     return await prisma.obat.delete({
         where: { id }
