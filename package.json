@@ -1,0 +1,7 @@
+{
+  "name": "apotek-eka-farma-monorepo",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "cd api-apotek-eka-farma && npm install && npm run build && npm start"
+  }
+}
