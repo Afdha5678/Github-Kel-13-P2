@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // src/index.ts
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-require("dotenv/config"); // Memuat variabel dari file .env secara otomatis
+// Vercel and local will load env variables via other means or natively
 process.env.TZ = 'Asia/Jakarta';
 // Import Peta Jalur (Routes)
 const obatRoutes_1 = __importDefault(require("./routes/obatRoutes"));
