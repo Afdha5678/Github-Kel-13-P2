@@ -1,0 +1,116 @@
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../src/generated/client"
+  binaryTargets = ["native", "rhel-openssl-1.0.x", "rhel-openssl-3.0.x", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                   String    @id @default(uuid())
+  nama                 String
+  email                String    @unique
+  password             String
+  role                 Role      @default(PEGAWAI)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  resetPasswordExpires DateTime?
+  resetPasswordToken   String?
+}
+
+model Obat {
+  id              String            @id @default(uuid())
+  nama            String
+  hargaJual       Int
+  satuan          String            @default("Pcs")
+  lokasiRak       String?
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  image           String?
+  detailPembelian DetailPembelian[]
+  detailPenjualan DetailPenjualan[]
+  stok            Stok[]
+}
+
+model Stok {
+  id                 String          @id @default(uuid())
+  jumlah             Int             @default(0)
+  obatId             String
+  updatedAt          DateTime        @updatedAt
+  createdAt          DateTime        @default(now())
+  tanggalKedaluwarsa DateTime
+  stockMovements     StockMovement[]
+  obat               Obat            @relation(fields: [obatId], references: [id], onDelete: Cascade)
+}
+
+model StockMovement {
+  id        String       @id @default(uuid())
+  type      MovementType
+  quantity  Int
+  createdAt DateTime     @default(now())
+  stokId    String
+  stok      Stok         @relation(fields: [stokId], references: [id], onDelete: Cascade)
+}
+
+model TransaksiPenjualan {
+  id        String            @id @default(uuid())
+  tanggal   DateTime          @default(now())
+  total     Int
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  details   DetailPenjualan[]
+}
+
+model DetailPenjualan {
+  id          String             @id @default(uuid())
+  quantity    Int
+  harga       Int
+  transaksiId String
+  obatId      String
+  obat        Obat               @relation(fields: [obatId], references: [id])
+  transaksi   TransaksiPenjualan @relation(fields: [transaksiId], references: [id], onDelete: Cascade)
+}
+
+model Supplier {
+  id                 String               @id @default(uuid())
+  nama               String
+  alamat             String
+  telepon            String
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  transaksiPembelian TransaksiPembelian[]
+}
+
+model TransaksiPembelian {
+  id         String            @id @default(uuid())
+  tanggal    DateTime          @default(now())
+  status     String
+  supplierId String
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  details    DetailPembelian[]
+  supplier   Supplier          @relation(fields: [supplierId], references: [id])
+}
+
+model DetailPembelian {
+  id               String             @id @default(uuid())
+  quantityOrdered  Int
+  quantityReceived Int
+  transaksiId      String
+  obatId           String
+  obat             Obat               @relation(fields: [obatId], references: [id])
+  transaksi        TransaksiPembelian @relation(fields: [transaksiId], references: [id], onDelete: Cascade)
+}
+
+enum MovementType {
+  IN
+  OUT
+  ADJUSTMENT
+}
+
+enum Role {
+  OWNER
+  PEGAWAI
+}
