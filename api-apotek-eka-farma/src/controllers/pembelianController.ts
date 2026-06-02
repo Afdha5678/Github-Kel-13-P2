@@ -12,7 +12,7 @@ export const createPembelian = async (req: Request, res: Response) => {
 
 export const receivePembelian = async (req: Request, res: Response) => {
     try {
-        const result = await pembelianService.receivePembelianService(req.params.id, req.body);
+        const result = await pembelianService.receivePembelianService(req.params.id as string, req.body);
         res.status(200).json({ success: true, message: 'Barang berhasil diterima dan stok diupdate', data: result });
     } catch (error) {
         res.status(400).json({ success: false, message: 'Gagal menerima barang', error: error instanceof Error ? error.message : 'Unknown Error' });

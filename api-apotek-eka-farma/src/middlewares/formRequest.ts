@@ -20,11 +20,11 @@ export const formRequest = (requestClass: AppRequest) => {
             }
 
             // 2. Validasi Data (Zod)
-            const validatedData = await requestClass.rules.parseAsync({
+            const validatedData = (await requestClass.rules.parseAsync({
                 body: req.body,
                 query: req.query,
                 params: req.params,
-            });
+            })) as any;
 
             // Update req object with coerced values from Zod (e.g. string to number)
             if (validatedData.body !== undefined) req.body = validatedData.body;
