@@ -29,7 +29,10 @@ interface TransaksiPembelian {
     details: any[]
 }
 
-export default function Pembelian() {
+export default function Pembelian({ setTitle }: { setTitle: (title: string) => void }) {
+    useEffect(() => {
+        setTitle("Transaksi Pembelian")
+    }, [setTitle])
     const router = useRouter()
     const [pembelians, setPembelians] = useState<TransaksiPembelian[]>([])
     const [isLoading, setIsLoading] = useState(true)

@@ -20,7 +20,10 @@ interface CartItem {
     quantityOrdered: number
 }
 
-export default function CreatePembelian() {
+export default function CreatePembelian({ setTitle }: { setTitle: (title: string) => void }) {
+    useEffect(() => {
+        setTitle("Buat Pesanan (PO)")
+    }, [setTitle])
     const router = useRouter()
     const [obats, setObats] = useState<Obat[]>([])
     const [suppliers, setSuppliers] = useState<Supplier[]>([])

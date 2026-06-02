@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { z } from 'zod';
-import { AppRequest } from '../../middlewares/formRequest';
+import { AppRequest } from '@/middlewares/formRequest';
 
 export const StorePembelianRequest: AppRequest = {
     authorize: (req: Request) => {

@@ -25,7 +25,7 @@ interface ChartData {
     total: number
 }
 
-type ReportType = 'TOTAL_OBAT' | 'STOK_MENIPIS' | 'KEDALUWARSA' | 'CHART_PENDAPATAN' | 'TRANSAKSI_TERBARU' | null;
+type ReportType = 'TOTAL_OBAT' | 'STOK_MENIPIS' | 'KEDALUWARSA' | 'CHART_PENDAPATAN' | 'TRANSAKSI_TERBARU' | 'TOP_SELLING' | 'PURCHASES_SUPPLIER' | null;
 
 export default function Laporan({ setTitle }: { setTitle: (title: string) => void }) {
     const router = useRouter()
@@ -39,6 +39,8 @@ export default function Laporan({ setTitle }: { setTitle: (title: string) => voi
     const [chartData, setChartData] = useState<ChartData[]>([])
     const [chartFilter, setChartFilter] = useState<'week' | 'month' | 'year'>('week')
     const [isChartLoading, setIsChartLoading] = useState(false)
+    const [topSellingData, setTopSellingData] = useState<{nama: string, totalSold: number}[]>([])
+    const [supplierData, setSupplierData] = useState<{nama: string, totalOrders: number}[]>([])
 
     useEffect(() => {
         setTitle("Laporan Apotek")
@@ -77,6 +79,36 @@ export default function Laporan({ setTitle }: { setTitle: (title: string) => voi
                 }
             }
             fetchChart()
+        }
+        
+        if (selectedReport === 'TOP_SELLING') {
+            const fetchTopSelling = async () => {
+                setIsChartLoading(true)
+                try {
+                    const response = await api.get(`/dashboard/top-selling`)
+                    setTopSellingData(response.data.data)
+                } catch (error) {
+                    console.error("Gagal mengambil data top selling:", error)
+                } finally {
+                    setIsChartLoading(false)
+                }
+            }
+            fetchTopSelling()
+        }
+        
+        if (selectedReport === 'PURCHASES_SUPPLIER') {
+            const fetchSupplier = async () => {
+                setIsChartLoading(true)
+                try {
+                    const response = await api.get(`/dashboard/purchases-supplier`)
+                    setSupplierData(response.data.data)
+                } catch (error) {
+                    console.error("Gagal mengambil data supplier:", error)
+                } finally {
+                    setIsChartLoading(false)
+                }
+            }
+            fetchSupplier()
         }
     }, [selectedReport, chartFilter])
 
@@ -166,6 +198,32 @@ export default function Laporan({ setTitle }: { setTitle: (title: string) => voi
                         <h3 className="font-bold text-gray-800 text-lg z-10">Obat Kedaluwarsa</h3>
                         <p className="text-sm text-gray-500 mt-1 z-10">Metrik jumlah obat yang akan kedaluwarsa dalam 30 hari ke depan.</p>
                         <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-amber-50 rounded-full opacity-0 group-hover:opacity-50 transition-all"></div>
+                    </button>
+
+                    {/* Top Selling */}
+                    <button 
+                        onClick={() => setSelectedReport('TOP_SELLING')}
+                        className="bg-white p-6 rounded-3xl shadow-sm border border-emerald-100 hover:shadow-md transition-all text-left flex flex-col group relative overflow-hidden"
+                    >
+                        <div className="w-12 h-12 bg-emerald-50 text-emerald-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform z-10">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                        </div>
+                        <h3 className="font-bold text-gray-800 text-lg z-10">Obat Terlaris</h3>
+                        <p className="text-sm text-gray-500 mt-1 z-10">Grafik 15 obat paling banyak terjual.</p>
+                        <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-emerald-50 rounded-full opacity-0 group-hover:opacity-50 transition-all"></div>
+                    </button>
+
+                    {/* Purchases Supplier */}
+                    <button 
+                        onClick={() => setSelectedReport('PURCHASES_SUPPLIER')}
+                        className="bg-white p-6 rounded-3xl shadow-sm border border-indigo-100 hover:shadow-md transition-all text-left flex flex-col group relative overflow-hidden"
+                    >
+                        <div className="w-12 h-12 bg-indigo-50 text-indigo-500 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform z-10">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+                        </div>
+                        <h3 className="font-bold text-gray-800 text-lg z-10">Pembelian ke Supplier</h3>
+                        <p className="text-sm text-gray-500 mt-1 z-10">Grafik jumlah transaksi pembelian per supplier.</p>
+                        <div className="absolute -right-4 -bottom-4 w-24 h-24 bg-indigo-50 rounded-full opacity-0 group-hover:opacity-50 transition-all"></div>
                     </button>
                 </div>
             </div>
@@ -378,6 +436,78 @@ export default function Laporan({ setTitle }: { setTitle: (title: string) => voi
                             <p className="text-sm text-gray-400 mt-4 underline decoration-dashed underline-offset-4 group-hover:text-amber-500">Klik untuk melihat detail kedaluwarsa</p>
                         </div>
                         <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-amber-50 rounded-full opacity-50 group-hover:scale-110 transition-transform"></div>
+                    </div>
+                </div>
+            )}
+
+            {/* 6. TOP_SELLING */}
+            {selectedReport === 'TOP_SELLING' && (
+                <div className="bg-white rounded-3xl shadow-sm border border-emerald-100 overflow-hidden max-w-5xl mx-auto mt-4">
+                    <div className="p-6 border-b border-emerald-50 flex justify-between items-center bg-white">
+                        <h4 className="text-lg font-semibold text-gray-800">15 Obat Terlaris</h4>
+                    </div>
+                    <div className="p-6 h-[400px]">
+                        {isChartLoading ? (
+                            <div className="h-full flex items-center justify-center text-gray-400">Memuat grafik...</div>
+                        ) : (
+                            <ReactECharts 
+                                option={{
+                                    tooltip: { trigger: 'axis' },
+                                    grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+                                    xAxis: {
+                                        type: 'category',
+                                        data: topSellingData.map(d => d.nama),
+                                        axisLabel: { interval: 0, rotate: 15 }
+                                    },
+                                    yAxis: { type: 'value' },
+                                    series: [
+                                        {
+                                            data: topSellingData.map(d => d.totalSold),
+                                            type: 'bar',
+                                            itemStyle: { color: '#10b981', borderRadius: [4, 4, 0, 0] },
+                                            barMaxWidth: 60
+                                        }
+                                    ]
+                                }} 
+                                style={{ height: '100%', width: '100%' }}
+                            />
+                        )}
+                    </div>
+                </div>
+            )}
+
+            {/* 7. PURCHASES_SUPPLIER */}
+            {selectedReport === 'PURCHASES_SUPPLIER' && (
+                <div className="bg-white rounded-3xl shadow-sm border border-indigo-100 overflow-hidden max-w-5xl mx-auto mt-4">
+                    <div className="p-6 border-b border-indigo-50 flex justify-between items-center bg-white">
+                        <h4 className="text-lg font-semibold text-gray-800">Pembelian ke Supplier (Berdasarkan Frekuensi PO)</h4>
+                    </div>
+                    <div className="p-6 h-[400px]">
+                        {isChartLoading ? (
+                            <div className="h-full flex items-center justify-center text-gray-400">Memuat grafik...</div>
+                        ) : (
+                            <ReactECharts 
+                                option={{
+                                    tooltip: { trigger: 'axis' },
+                                    grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
+                                    xAxis: {
+                                        type: 'category',
+                                        data: supplierData.map(d => d.nama),
+                                        axisLabel: { interval: 0, rotate: 15 }
+                                    },
+                                    yAxis: { type: 'value' },
+                                    series: [
+                                        {
+                                            data: supplierData.map(d => d.totalOrders),
+                                            type: 'bar',
+                                            itemStyle: { color: '#6366f1', borderRadius: [4, 4, 0, 0] },
+                                            barMaxWidth: 60
+                                        }
+                                    ]
+                                }} 
+                                style={{ height: '100%', width: '100%' }}
+                            />
+                        )}
                     </div>
                 </div>
             )}

@@ -19,7 +19,10 @@ interface TransaksiPembelian {
     details: TransaksiDetail[]
 }
 
-export default function DetailPembelian() {
+export default function DetailPembelian({ setTitle }: { setTitle: (title: string) => void }) {
+    useEffect(() => {
+        setTitle("Detail Transaksi Pembelian")
+    }, [setTitle])
     const router = useRouter()
     const { id } = router.query
 

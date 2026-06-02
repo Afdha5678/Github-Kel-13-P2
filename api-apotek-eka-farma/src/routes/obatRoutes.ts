@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import * as obatController from '../controllers/obatController'
-import { authenticateToken } from '../middlewares/authMiddleware'
-import { formRequest } from '../middlewares/formRequest'
-import { StoreObatRequest } from '../requests/obat/StoreObatRequest'
-import { UpdateObatRequest } from '../requests/obat/UpdateObatRequest'
-import { upload } from '../middlewares/uploadMiddleware'
+import * as obatController from '@/controllers/obatController'
+import { authenticateToken } from '@/middlewares/authMiddleware'
+import { formRequest } from '@/middlewares/formRequest'
+import { StoreObatRequest } from '@/requests/obat/StoreObatRequest'
+import { UpdateObatRequest } from '@/requests/obat/UpdateObatRequest'
+import { upload } from '@/middlewares/uploadMiddleware'
 
 const router = Router()
 

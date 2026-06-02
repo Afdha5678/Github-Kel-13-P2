@@ -1,19 +1,18 @@
-
 // src/index.ts
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-// Vercel and local will load env variables via other means or natively
+import 'dotenv/config'; // Memuat variabel dari file .env secara otomatis
 
 process.env.TZ = 'Asia/Jakarta';
 
 // Import Peta Jalur (Routes)
-import obatRoutes from './routes/obatRoutes';
-import authRoutes from './routes/authRoutes';
-import supplierRoutes from './routes/supplierRoutes';
-import penjualanRoutes from './routes/penjualanRoutes';
-import pembelianRoutes from './routes/pembelianRoutes';
-import dashboardRoutes from './routes/dashboardRoutes';
-import userRoutes from './routes/userRoutes';
+import obatRoutes from '@/routes/obatRoutes';
+import authRoutes from '@/routes/authRoutes';
+import supplierRoutes from '@/routes/supplierRoutes';
+import penjualanRoutes from '@/routes/penjualanRoutes';
+import pembelianRoutes from '@/routes/pembelianRoutes';
+import dashboardRoutes from '@/routes/dashboardRoutes';
+import userRoutes from '@/routes/userRoutes';
 
 const app = express();
 
@@ -44,8 +43,7 @@ app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 app.get('/api/health', (req: Request, res: Response) => {
     res.status(200).json({
         success: true,
-        message: '🚀 API Server Apotek Eka Farma beroperasi secara normal!',
-        db_configured: !!process.env.DATABASE_URL
+        message: '🚀 API Server Apotek Eka Farma beroperasi secara normal!'
     });
 });
 
@@ -88,15 +86,10 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
  */
 const PORT = process.env.PORT || 5000;
 
-if (!process.env.VERCEL) {
-    app.listen(PORT, () => {
-        console.log(`=================================================`);
-        console.log(`🚀 Server Backend Apotek berjalan di port: ${PORT}`);
-        console.log(`🔗 Base URL: http://localhost:${PORT}/api`);
-        console.log(`🩺 Health Check: http://localhost:${PORT}/api/health`);
-        console.log(`=================================================`);
-    });
-}
-
-export default app;
-module.exports = app;
+app.listen(PORT, () => {
+    console.log(`=================================================`);
+    console.log(`🚀 Server Backend Apotek berjalan di port: ${PORT}`);
+    console.log(`🔗 Base URL: http://localhost:${PORT}/api`);
+    console.log(`🩺 Health Check: http://localhost:${PORT}/api/health`);
+    console.log(`=================================================`);
+});

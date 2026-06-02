@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as dashboardService from '../services/dashboardService';
+import * as dashboardService from '@/services/dashboardService';
 
 export const getDashboardMetrics = async (req: Request, res: Response) => {
     try {
@@ -19,5 +19,25 @@ export const getChartData = async (req: Request, res: Response) => {
     } catch (error) {
         console.error("Chart error:", error);
         res.status(500).json({ success: false, message: 'Gagal mengambil data grafik' });
+    }
+};
+
+export const getTopSellingObat = async (req: Request, res: Response) => {
+    try {
+        const data = await dashboardService.getTopSellingObatService();
+        res.status(200).json({ success: true, data });
+    } catch (error) {
+        console.error("Top selling obat error:", error);
+        res.status(500).json({ success: false, message: 'Gagal mengambil data obat terlaris' });
+    }
+};
+
+export const getPembelianBySupplier = async (req: Request, res: Response) => {
+    try {
+        const data = await dashboardService.getPembelianBySupplierService();
+        res.status(200).json({ success: true, data });
+    } catch (error) {
+        console.error("Pembelian by supplier error:", error);
+        res.status(500).json({ success: false, message: 'Gagal mengambil data pembelian per supplier' });
     }
 };

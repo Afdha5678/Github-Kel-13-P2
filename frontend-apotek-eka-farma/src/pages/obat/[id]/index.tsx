@@ -20,7 +20,10 @@ interface Obat {
     lokasiRak?: string | null
 }
 
-export default function DetailObat() {
+export default function DetailObat({ setTitle }: { setTitle: (title: string) => void }) {
+    useEffect(() => {
+        setTitle("Detail Obat")
+    }, [setTitle])
     const router = useRouter()
     const { id } = router.query
 

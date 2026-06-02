@@ -1,6 +1,6 @@
 // src/controllers/obatController.ts
 import { Request, Response } from 'express';
-import * as obatService from '../services/obatService';
+import * as obatService from '@/services/obatService';
 
 /**
  * MENGELOLA HTTP REQUEST UNTUK ENTITAS OBAT

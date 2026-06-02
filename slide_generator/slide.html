@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Proses Integrasi</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #e6e9f0 0%, #eef1f5 100%);
+            width: 1280px;
+            height: 720px;
+            overflow: hidden;
+            display: flex;
+        }
+        
+        .sidebar {
+            width: 80px;
+            background-color: #1a365d;
+            height: 100%;
+            position: relative;
+        }
+
+        .sidebar::after {
+            content: '';
+            position: absolute;
+            bottom: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border: 3px solid #63b3ed;
+            border-radius: 50%;
+            background-color: transparent;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 150px;
+            background-color: #63b3ed;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 50px 70px;
+            position: relative;
+            background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(220,230,250,0.8) 100%);
+        }
+
+        .decorative-blob-1 {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            background-color: #bee3f8;
+            border-radius: 50%;
+            opacity: 0.6;
+            filter: blur(40px);
+            z-index: 0;
+        }
+
+        .decorative-blob-2 {
+            position: absolute;
+            bottom: -50px;
+            right: -20px;
+            width: 400px;
+            height: 400px;
+            background-color: #c3dafe;
+            border-radius: 50%;
+            opacity: 0.5;
+            filter: blur(50px);
+            z-index: 0;
+        }
+        
+        h1 {
+            color: #1a365d;
+            font-size: 56px;
+            margin-top: 0;
+            margin-bottom: 40px;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .bullet-points {
+            font-size: 24px;
+            line-height: 1.6;
+            color: #2d3748;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .bullet-points ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        
+        .bullet-points li {
+            margin-bottom: 18px;
+        }
+
+        .bullet-points strong {
+            color: #1a365d;
+        }
+        
+        .code-container {
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            padding: 24px;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 20px;
+            color: #d4d4d4;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+            line-height: 1.5;
+        }
+
+        .code-container .keyword { color: #569cd6; }
+        .code-container .string { color: #ce9178; }
+        .code-container .function { color: #dcdcaa; }
+        .code-container .variable { color: #9cdcfe; }
+        .code-container .comment { color: #6a9955; }
+        .code-container .operator { color: #d4d4d4; }
+        .code-container .property { color: #4fc1ff; }
+
+        .slide-number {
+            position: absolute;
+            top: 40px;
+            right: 50px;
+            width: 40px;
+            height: 40px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a365d;
+            font-weight: bold;
+            font-size: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="sidebar"></div>
+    <div class="content">
+        <div class="decorative-blob-1"></div>
+        <div class="decorative-blob-2"></div>
+        <div class="slide-number">❯</div>
+        
+        <h1>Proses Integrasi</h1>
+        
+        <div class="bullet-points">
+            <ul>
+                <li><strong>Arsitektur Sistem:</strong> Frontend (Next.js) dan Backend API (Express.js) terpisah, terintegrasi via REST API menggunakan Axios.</li>
+                <li><strong>Autentikasi:</strong> Menggunakan JSON Web Token (JWT) dengan validasi role (Pemilik, Admin, Apoteker).</li>
+                <li><strong>Database Connection:</strong> Prisma ORM dikonfigurasi melalui file .env untuk terhubung ke PostgreSQL.</li>
+                <li><strong>Penyimpanan File:</strong> Gambar/berkas disimpan di server backend (statis).</li>
+                <li><strong>Deployment:</strong> Di-deploy secara terpisah (*microservices*) menggunakan cloud Railway.</li>
+            </ul>
+        </div>
+        
+        <div class="code-container">
+<span class="comment">// authController.ts</span>
+<span class="keyword">const</span> <span class="variable">token</span> <span class="operator">=</span> <span class="variable">jwt</span>.<span class="function">sign</span>(
+    { <span class="property">id</span>: <span class="variable">user</span>.<span class="property">id</span>, <span class="property">role</span>: <span class="variable">user</span>.<span class="property">role</span> },
+    <span class="variable">process</span>.<span class="property">env</span>.<span class="property">JWT_SECRET</span><span class="operator">!</span>,
+    { <span class="property">expiresIn</span>: <span class="string">'1d'</span> }
+);
+<span class="keyword">return</span> <span class="variable">res</span>.<span class="function">json</span>({ <span class="variable">token</span>, <span class="variable">user</span> });
+
+<br>
+<span class="comment"># .env (Backend Configuration)</span>
+<span class="property">PORT</span><span class="operator">=</span><span class="string">5001</span>
+<span class="property">DATABASE_URL</span><span class="operator">=</span><span class="string">"postgresql://postgres:root@localhost:5432/apotek_eka_farma"</span>
+<span class="property">JWT_SECRET</span><span class="operator">=</span><span class="string">"supersecret_apotek"</span>
+        </div>
+    </div>
+</body>
+</html>

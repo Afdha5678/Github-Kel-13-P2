@@ -118,7 +118,9 @@ export default function Obat({ setTitle }: { setTitle: (title: string) => void }
                             </tr>
                         ) : (
                             obats.map((obat, index) => {
-                                const imageUrl = obat.image ? `${API_BASE_URL}${obat.image}` : `https://ui-avatars.com/api/?name=${encodeURIComponent(obat.nama)}&background=random`;
+                                const imageUrl = obat.image 
+                                    ? (obat.image.startsWith('http') ? obat.image : `${API_BASE_URL}${obat.image}`) 
+                                    : `https://ui-avatars.com/api/?name=${encodeURIComponent(obat.nama)}&background=random`;
                                 
                                 // Cek apakah row ini harus di-highlight
                                 let isHighlighted = false;

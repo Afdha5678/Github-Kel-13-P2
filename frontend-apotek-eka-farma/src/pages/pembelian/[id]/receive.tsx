@@ -27,7 +27,10 @@ interface ReceiveFormState {
 
 export async function getServerSideProps(context: any) { return { props: {} } }
 
-export default function ReceivePembelian() {
+export default function ReceivePembelian({ setTitle }: { setTitle: (title: string) => void }) {
+    useEffect(() => {
+        setTitle("Terima Barang (Receive)")
+    }, [setTitle])
     const router = useRouter()
     const { id } = router.query
 

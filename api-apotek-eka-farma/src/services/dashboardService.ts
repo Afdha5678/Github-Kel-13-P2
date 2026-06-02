@@ -1,4 +1,4 @@
-import { prisma } from '../lib/prisma';
+import { prisma } from '@/lib/prisma';
 
 export const getDashboardMetricsService = async () => {
     // 1. Total Jenis Obat
@@ -85,5 +85,38 @@ export const getChartDataService = async (filter: 'week' | 'month' | 'year') => 
     return result.map(row => ({
         date: row.date,
         total: Number(row.total || 0)
+    }));
+};
+
+export const getTopSellingObatService = async () => {
+    const result = await prisma.$queryRaw<any[]>`
+        SELECT "Obat"."nama", SUM("DetailPenjualan"."quantity") as "total_sold"
+        FROM "DetailPenjualan"
+        JOIN "Obat" ON "DetailPenjualan"."obatId" = "Obat"."id"
+        GROUP BY "Obat"."id", "Obat"."nama"
+        ORDER BY "total_sold" DESC
+        LIMIT 15
+    `;
+    
+    return result.map(row => ({
+        nama: row.nama,
+        totalSold: Number(row.total_sold || 0)
+    }));
+};
+
+export const getPembelianBySupplierService = async () => {
+    // We count how many orders each supplier got
+    const result = await prisma.$queryRaw<any[]>`
+        SELECT "Supplier"."nama", COUNT("TransaksiPembelian"."id") as "total_orders"
+        FROM "TransaksiPembelian"
+        JOIN "Supplier" ON "TransaksiPembelian"."supplierId" = "Supplier"."id"
+        GROUP BY "Supplier"."id", "Supplier"."nama"
+        ORDER BY "total_orders" DESC
+        LIMIT 15
+    `;
+    
+    return result.map(row => ({
+        nama: row.nama,
+        totalOrders: Number(row.total_orders || 0)
     }));
 };
