@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "npx prisma generate",
-    "prestart": "npx prisma migrate deploy && tsx prisma/seed.ts",
+    "prestart": "tsx prisma/seed.ts",
     "start": "tsx src/index.ts"
   },
   "dependencies": {
