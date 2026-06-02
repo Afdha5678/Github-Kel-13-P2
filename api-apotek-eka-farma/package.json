@@ -8,9 +8,9 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "npx prisma generate && tsc && tsc-alias",
-    "prestart": "npx prisma migrate deploy",
-    "start": "node dist/prisma/seed.js && node dist/index.js"
+    "build": "npx prisma generate",
+    "prestart": "npx prisma migrate deploy && tsx prisma/seed.ts",
+    "start": "tsx src/index.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
@@ -24,6 +24,8 @@
     "multer": "^2.1.1",
     "nodemailer": "^8.0.7",
     "pg": "^8.20.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
     "uuid": "^14.0.0",
     "zod": "^4.3.6"
   },
@@ -40,8 +42,6 @@
     "@types/pg": "^8.20.0",
     "@types/uuid": "^10.0.0",
     "prisma": "^7.8.0",
-    "tsc-alias": "^1.8.16",
-    "tsx": "^4.21.0",
-    "typescript": "^6.0.3"
+    "tsc-alias": "^1.8.16"
   }
 }
